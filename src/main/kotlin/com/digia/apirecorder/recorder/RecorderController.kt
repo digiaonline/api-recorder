@@ -2,6 +2,7 @@ package com.digia.apirecorder.recorder
 
 import com.digia.apirecorder.recorder.dto.StartRecordingSetRequestDTO
 import com.digia.apirecorder.recorder.dto.StartSingleRecordRequestDTO
+import mu.KotlinLogging
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpEntity
@@ -10,20 +11,16 @@ import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
-import java.net.URL
-import java.time.Instant
 
 @Controller
-class RecorderController @Autowired constructor(val dataManager : DataManager){
+class RecorderController @Autowired constructor(val dataService : DataService){
 
-    companion object{
-        private val LOGGER = LoggerFactory.getLogger(RecorderController::class.java)
-    }
+    private val log = KotlinLogging.logger {}
 
     @PostMapping("/record/single/start")
     fun startRecording(@RequestBody startSingleRecordRequest : StartSingleRecordRequestDTO) : HttpEntity<*> {
         return try{
-            val uuid = dataManager.startRecording(
+            val uuid = dataService.startRecording(
                 startSingleRecordRequest.url,
                 startSingleRecordRequest.period,
                 startSingleRecordRequest.duration
@@ -31,7 +28,7 @@ class RecorderController @Autowired constructor(val dataManager : DataManager){
              ResponseEntity(uuid, HttpStatus.CREATED)
         }
         catch(e : Exception){
-            LOGGER.error("Error while starting the recorder", e)
+            log.error("Error while starting the recorder", e)
             ResponseEntity("something went wrong: ${e.message}", HttpStatus.INTERNAL_SERVER_ERROR)
         }
     }
@@ -39,18 +36,18 @@ class RecorderController @Autowired constructor(val dataManager : DataManager){
     @PostMapping("/record/set/start")
     fun startRecording(@RequestBody startRecordingSetRequest : StartRecordingSetRequestDTO) : HttpEntity<*> {
         return try{
-            val uuid = dataManager.startRecording(startRecordingSetRequest.urlsToRecord, startRecordingSetRequest.duration)
+            val uuid = dataService.startRecording(startRecordingSetRequest.urlsToRecord, startRecordingSetRequest.duration)
             ResponseEntity(uuid, HttpStatus.CREATED)
         }
         catch(e : Exception){
-            LOGGER.error("Error while starting the recorder", e)
+            log.error("Error while starting the recorder", e)
             ResponseEntity("something went wrong: ${e.message}", HttpStatus.INTERNAL_SERVER_ERROR)
         }
     }
 
     @PostMapping("record/stop/*")
     fun stopRecording(recordingId : String) : HttpEntity<*>{
-        dataManager.stopRecording(recordingId)
+        dataService.stopRecording(recordingId)
         return ResponseEntity("Record $recordingId stopped", HttpStatus.OK)
     }
 }

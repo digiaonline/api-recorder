@@ -1,8 +1,7 @@
 package com.digia.apirecorder.recorder
 
-import com.digia.apirecorder.recorder.dto.ParametersDTO
 import com.digia.apirecorder.recorder.dto.UrlToRecord
-import com.digia.apirecorder.recorder.persistence.*
+import com.digia.apirecorder.persistence.*
 import kotlinx.coroutines.*
 import mu.KotlinLogging
 
@@ -13,13 +12,12 @@ import java.time.Duration
 import java.time.Instant
 import java.time.LocalDateTime
 import java.util.*
-import kotlin.collections.HashMap
 
 @Service
-class DataManager @Autowired constructor(val recordRepository: RecordRepository, val requestRepository: RequestRepository, val dataWriter: DataWriter, val dataReader: DataReader) {
+class DataService @Autowired constructor(val recordRepository: RecordRepository, val requestRepository: RequestRepository, val dataWriter: DataWriterService, val dataReader: DataReaderService) {
 
     private val log = KotlinLogging.logger {}
-    private val activeRecordings : MutableMap<String, MutableSet<Job>> = HashMap()
+    private val activeRecordings : MutableMap<String, MutableSet<Job>> = mutableMapOf()
 
     fun startRecording(url : String, period : Int, recordingDuration : Long) : String{
         val uuid = UUID.randomUUID().toString()
@@ -34,14 +32,36 @@ class DataManager @Autowired constructor(val recordRepository: RecordRepository,
 
     fun startRecording(urlsToRecord : Array<UrlToRecord>, recordingDuration : Long) : String{
         val uuid = UUID.randomUUID().toString()
-        val recordSet = Record(null,uuid, LocalDateTime.now(), LocalDateTime.now().plusSeconds(recordingDuration))
-        recordRepository.save(recordSet)
+        val record = Record(null,uuid, LocalDateTime.now(), LocalDateTime.now().plusSeconds(recordingDuration))
+        recordRepository.save(record)
         activeRecordings[uuid] = mutableSetOf()
         for(urlToRecord in urlsToRecord){
-            val record = Request(null, recordSet, urlToRecord.period, urlToRecord.url)
-            requestRepository.save(record)
-            val job = startRecordingJob(record, recordingDuration)
-            activeRecordings[uuid]!!.add(job)
+            if(urlToRecord.parameters != null){
+                //Creating urls based on parameters
+                var urlsWithoutInjectedParameters = listOf<String>(urlToRecord.url)
+                for(parameter in urlToRecord.parameters){
+                    val urlsWithInjectedParameters = mutableListOf<String>()
+                    for(urlToUpdate in urlsWithoutInjectedParameters){
+                        for(parameterValue in parameter.values){
+                            urlsWithInjectedParameters.add(urlToUpdate.replace(parameter.name, parameterValue))
+                        }
+                    }
+                    urlsWithoutInjectedParameters = urlsWithInjectedParameters
+                }
+                //Creating jobs based on the urls
+                for(url in urlsWithoutInjectedParameters){
+                    val request = Request(null, record, urlToRecord.period, url.substringAfter("://"))
+                    requestRepository.save(request)
+                    val job = startRecordingJob(request, recordingDuration)
+                    activeRecordings[uuid]!!.add(job)
+                }
+            }
+            else{
+                val request = Request(null, record, urlToRecord.period, urlToRecord.url)
+                requestRepository.save(request)
+                val job = startRecordingJob(request, recordingDuration)
+                activeRecordings[uuid]!!.add(job)
+            }
         }
         return uuid
     }

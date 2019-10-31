@@ -1,5 +1,6 @@
 package com.digia.apirecorder.recorder
 
+import mu.KotlinLogging
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
@@ -10,13 +11,13 @@ import java.net.URI
 import java.net.URL
 
 @Service
-class DataReader {
+class DataReaderService {
 
     private val okHttpClient = OkHttpClient()
-    private val LOGGER = LoggerFactory.getLogger(DataReader::class.java)
+    private val log = KotlinLogging.logger {}
 
     fun read(url : String, headers : Map<String,String>?) : Response {
-        LOGGER.info("Reading data from $url")
+        log.info("Reading data from $url")
         val requestBuilder = Request.Builder().url(url)
         headers?.entries?.forEach { entry ->
             requestBuilder.addHeader(entry.key, entry.value)

@@ -1,7 +1,7 @@
 package com.digia.apirecorder
 
-import com.digia.apirecorder.recorder.persistence.Record
-import com.digia.apirecorder.recorder.persistence.RecordRepository
+import com.digia.apirecorder.persistence.Record
+import com.digia.apirecorder.persistence.RecordRepository
 import org.junit.jupiter.api.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired

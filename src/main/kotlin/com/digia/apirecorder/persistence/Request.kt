@@ -1,4 +1,4 @@
-package com.digia.apirecorder.recorder.persistence
+package com.digia.apirecorder.persistence
 
 import javax.persistence.*
 

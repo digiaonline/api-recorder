@@ -1,8 +1,8 @@
 package com.digia.apirecorder.recorder
 
-import com.digia.apirecorder.recorder.persistence.ResponseRepository
-import com.digia.apirecorder.recorder.persistence.Request
-import com.digia.apirecorder.recorder.persistence.Response
+import com.digia.apirecorder.persistence.ResponseRepository
+import com.digia.apirecorder.persistence.Request
+import com.digia.apirecorder.persistence.Response
 import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -11,7 +11,7 @@ import java.time.LocalDateTime
 
 
 @Service
-class DataWriter @Autowired constructor(val responseRepository : ResponseRepository) {
+class DataWriterService @Autowired constructor(val responseRepository : ResponseRepository) {
 
     private val log = KotlinLogging.logger {}
     private val lastBodyHashes : MutableMap<Request, ByteArray> = HashMap()

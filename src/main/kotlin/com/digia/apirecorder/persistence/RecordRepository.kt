@@ -1,4 +1,4 @@
-package com.digia.apirecorder.recorder.persistence
+package com.digia.apirecorder.persistence
 
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository

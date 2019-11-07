@@ -15,8 +15,10 @@ class PlayerService @Autowired constructor(val recordRepository : RecordReposito
     private val activePlays : MutableMap<String, ActivePlay> = mutableMapOf()
     private val ticker : Job = GlobalScope.launch(Dispatchers.Default)
     {
-        delay(1000)
-        tick()
+        while(true) {
+            delay(1000)
+            tick()
+        }
     }
 
     public fun getActivePlay(playUuid : String) : ActivePlay?{

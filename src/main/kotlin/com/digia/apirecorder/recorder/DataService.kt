@@ -22,10 +22,10 @@ class DataService @Autowired constructor(val recordRepository: RecordRepository,
     fun startRecording(url : String, period : Int, recordingDuration : Long) : String{
         val uuid = UUID.randomUUID().toString()
         val recordSet = Record(null, uuid, LocalDateTime.now(), LocalDateTime.now().plusSeconds(recordingDuration))
-        val record = Request(null, recordSet, period, url)
+        val record = Request(null, recordSet, period, url.substringAfter("://"))
         recordRepository.save(recordSet)
         requestRepository.save(record)
-        val job = startRecordingJob(record, recordingDuration)
+        val job = startRecordingJob(url, record, recordingDuration)
         activeRecordings[uuid] = mutableSetOf(job)
         return uuid
     }
@@ -52,27 +52,27 @@ class DataService @Autowired constructor(val recordRepository: RecordRepository,
                 for(url in urlsWithoutInjectedParameters){
                     val request = Request(null, record, urlToRecord.period, url.substringAfter("://"))
                     requestRepository.save(request)
-                    val job = startRecordingJob(request, recordingDuration)
+                    val job = startRecordingJob(url, request, recordingDuration)
                     activeRecordings[uuid]!!.add(job)
                 }
             }
             else{
-                val request = Request(null, record, urlToRecord.period, urlToRecord.url)
+                val request = Request(null, record, urlToRecord.period, urlToRecord.url.substringAfter("://"))
                 requestRepository.save(request)
-                val job = startRecordingJob(request, recordingDuration)
+                val job = startRecordingJob(urlToRecord.url, request, recordingDuration)
                 activeRecordings[uuid]!!.add(job)
             }
         }
         return uuid
     }
 
-    private fun startRecordingJob(request : Request, recordingDuration : Long) : Job{
+    private fun startRecordingJob(url : String, request : Request, recordingDuration : Long) : Job{
         return GlobalScope.launch(Dispatchers.IO){
             log.info("Starting recording ${request.url} for record ${request.id}")
             val recordingBeginningTime = Instant.now()
             while(recordingBeginningTime.plusMillis(recordingDuration * 1000L ).isAfter(Instant.now())){
                 val frameBeginningTime = Instant.now()
-                val httpResponse = dataReader.read(request.url, null)
+                val httpResponse = dataReader.read(url, null)
                 val responseBody = httpResponse.body?.string()
                 if(responseBody != null){
                     dataWriter.write(request, Duration.between(recordingBeginningTime, frameBeginningTime ).toMillis() / 1000L, responseBody)

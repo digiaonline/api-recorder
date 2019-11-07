@@ -72,4 +72,26 @@ class PlayerController @Autowired constructor(val playerService : PlayerService)
             ResponseEntity(e.message, HttpStatus.BAD_REQUEST)
         }
     }
+
+    @PutMapping("/player/{uuid}/speed/{speed}")
+    fun speed(@PathVariable("uuid") playUuid : String, @PathVariable("speed") speed : Int) : HttpEntity<*> {
+        return try {
+            playerService.updateActivePlay(playUuid, speed)
+            ResponseEntity("", HttpStatus.OK)
+        }
+        catch(e : Exception){
+            ResponseEntity(e.message, HttpStatus.BAD_REQUEST)
+        }
+    }
+
+    @PutMapping("/player/{uuid}/offset/{offset}")
+    fun offset(@PathVariable("uuid") playUuid : String, @PathVariable("offset") offset : Int) : HttpEntity<*> {
+        return try {
+            playerService.updateActivePlay(playUuid, offset)
+            ResponseEntity("", HttpStatus.OK)
+        }
+        catch(e : Exception){
+            ResponseEntity(e.message, HttpStatus.BAD_REQUEST)
+        }
+    }
 }

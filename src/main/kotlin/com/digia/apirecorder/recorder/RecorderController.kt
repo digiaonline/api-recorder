@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
+import java.time.Instant
 
 @Controller
 class RecorderController @Autowired constructor(val dataService : DataService){
@@ -23,7 +24,8 @@ class RecorderController @Autowired constructor(val dataService : DataService){
             val uuid = dataService.startRecording(
                 startSingleRecordRequest.url,
                 startSingleRecordRequest.period,
-                startSingleRecordRequest.duration
+                startSingleRecordRequest.duration,
+                if(startSingleRecordRequest.start != null) Instant.parse(startSingleRecordRequest.start) else null
             )
              ResponseEntity(uuid, HttpStatus.CREATED)
         }
@@ -36,7 +38,11 @@ class RecorderController @Autowired constructor(val dataService : DataService){
     @PostMapping("/record/set/start")
     fun startRecording(@RequestBody startRecordingSetRequest : StartRecordingSetRequestDTO) : HttpEntity<*> {
         return try{
-            val uuid = dataService.startRecording(startRecordingSetRequest.urlsToRecord, startRecordingSetRequest.duration)
+            val uuid = dataService.startRecording(
+                startRecordingSetRequest.urlsToRecord,
+                startRecordingSetRequest.duration,
+                if(startRecordingSetRequest.start != null) Instant.parse(startRecordingSetRequest.start) else null
+            )
             ResponseEntity(uuid, HttpStatus.CREATED)
         }
         catch(e : Exception){

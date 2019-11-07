@@ -19,18 +19,18 @@ class DataService @Autowired constructor(val recordRepository: RecordRepository,
     private val log = KotlinLogging.logger {}
     private val activeRecordings : MutableMap<String, MutableSet<Job>> = mutableMapOf()
 
-    fun startRecording(url : String, period : Int, recordingDuration : Long) : String{
+    fun startRecording(url : String, period : Int, recordingDuration : Long, start : Instant?) : String{
         val uuid = UUID.randomUUID().toString()
         val recordSet = Record(null, uuid, LocalDateTime.now(), LocalDateTime.now().plusSeconds(recordingDuration))
         val record = Request(null, recordSet, period, url.substringAfter("://"))
         recordRepository.save(recordSet)
         requestRepository.save(record)
-        val job = startRecordingJob(url, record, recordingDuration)
+        val job = startRecordingJob(url, record, recordingDuration, start)
         activeRecordings[uuid] = mutableSetOf(job)
         return uuid
     }
 
-    fun startRecording(urlsToRecord : Array<UrlToRecord>, recordingDuration : Long) : String{
+    fun startRecording(urlsToRecord : Array<UrlToRecord>, recordingDuration : Long, start : Instant?) : String{
         val uuid = UUID.randomUUID().toString()
         val record = Record(null,uuid, LocalDateTime.now(), LocalDateTime.now().plusSeconds(recordingDuration))
         recordRepository.save(record)
@@ -43,7 +43,17 @@ class DataService @Autowired constructor(val recordRepository: RecordRepository,
                     val urlsWithInjectedParameters = mutableListOf<String>()
                     for(urlToUpdate in urlsWithoutInjectedParameters){
                         for(parameterValue in parameter.values){
-                            urlsWithInjectedParameters.add(urlToUpdate.replace(parameter.name, parameterValue))
+                            if(!parameterValue.contains("...")){
+                                urlsWithInjectedParameters.add(urlToUpdate.replace(parameter.name, parameterValue))
+                            }
+                            else{
+                                val firstValue = Integer.parseInt(parameterValue.substringBefore("..."))
+                                val lastValue = Integer.parseInt(parameterValue.substringAfter("..."))
+                                for(i in firstValue .. lastValue){
+                                    urlsWithInjectedParameters.add(urlToUpdate.replace(parameter.name, i.toString()))
+                                }
+                            }
+
                         }
                     }
                     urlsWithoutInjectedParameters = urlsWithInjectedParameters
@@ -52,24 +62,24 @@ class DataService @Autowired constructor(val recordRepository: RecordRepository,
                 for(url in urlsWithoutInjectedParameters){
                     val request = Request(null, record, urlToRecord.period, url.substringAfter("://"))
                     requestRepository.save(request)
-                    val job = startRecordingJob(url, request, recordingDuration)
+                    val job = startRecordingJob(url, request, recordingDuration, start)
                     activeRecordings[uuid]!!.add(job)
                 }
             }
             else{
                 val request = Request(null, record, urlToRecord.period, urlToRecord.url.substringAfter("://"))
                 requestRepository.save(request)
-                val job = startRecordingJob(urlToRecord.url, request, recordingDuration)
+                val job = startRecordingJob(urlToRecord.url, request, recordingDuration, start)
                 activeRecordings[uuid]!!.add(job)
             }
         }
         return uuid
     }
 
-    private fun startRecordingJob(url : String, request : Request, recordingDuration : Long) : Job{
+    private fun startRecordingJob(url : String, request : Request, recordingDuration : Long, start : Instant?) : Job{
         return GlobalScope.launch(Dispatchers.IO){
             log.info("Starting recording ${request.url} for record ${request.id}")
-            val recordingBeginningTime = Instant.now()
+            val recordingBeginningTime = start?:Instant.now()
             while(recordingBeginningTime.plusMillis(recordingDuration * 1000L ).isAfter(Instant.now())){
                 val frameBeginningTime = Instant.now()
                 val httpResponse = dataReader.read(url, null)

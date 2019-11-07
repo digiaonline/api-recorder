@@ -1,6 +1,6 @@
 package com.digia.apirecorder.recorder.dto
 
-data class StartRecordingSetRequestDTO(val urlsToRecord : Array<UrlToRecord>, val duration : Long) {
+data class StartRecordingSetRequestDTO(val urlsToRecord : Array<UrlToRecord>, val duration : Long, val start : String?) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

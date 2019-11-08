@@ -9,6 +9,7 @@ import org.springframework.http.HttpEntity
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import java.time.Instant
@@ -51,8 +52,8 @@ class RecorderController @Autowired constructor(val dataService : DataService){
         }
     }
 
-    @PostMapping("record/stop/*")
-    fun stopRecording(recordingId : String) : HttpEntity<*>{
+    @PostMapping("record/stop/{recordingId}")
+    fun stopRecording(@PathVariable("recordingId") recordingId : String) : HttpEntity<*>{
         dataService.stopRecording(recordingId)
         return ResponseEntity("Record $recordingId stopped", HttpStatus.OK)
     }

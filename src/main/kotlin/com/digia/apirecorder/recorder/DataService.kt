@@ -12,6 +12,8 @@ import java.time.Duration
 import java.time.Instant
 import java.time.LocalDateTime
 import java.util.*
+import kotlin.collections.RandomAccess
+import kotlin.random.Random
 
 @Service
 class DataService @Autowired constructor(val recordRepository: RecordRepository, val requestRepository: RequestRepository, val dataWriter: DataWriterService, val dataReader: DataReaderService) {
@@ -80,12 +82,22 @@ class DataService @Autowired constructor(val recordRepository: RecordRepository,
         return GlobalScope.launch(Dispatchers.IO){
             log.info("Starting recording ${request.url} for record ${request.id}")
             val recordingBeginningTime = start?:Instant.now()
+            delay(Random.nextInt(request.period) * 1000L) //random offset so that all the recordings won't start at the same time
             while(recordingBeginningTime.plusMillis(recordingDuration * 1000L ).isAfter(Instant.now())){
                 val frameBeginningTime = Instant.now()
-                val httpResponse = dataReader.read(url, null)
-                val responseBody = httpResponse.body?.string()
-                if(responseBody != null){
-                    dataWriter.write(request, Duration.between(recordingBeginningTime, frameBeginningTime ).toMillis() / 1000L, responseBody)
+                try {
+                    val httpResponse = dataReader.read(url, null)
+                    val responseBody = httpResponse.body?.string()
+                    if (responseBody != null) {
+                        dataWriter.write(
+                            request,
+                            Duration.between(recordingBeginningTime, frameBeginningTime).toMillis() / 1000L,
+                            responseBody
+                        )
+                    }
+                }
+                catch(e : Exception){
+                    log.warn("$url recording failed: ${e.message}")
                 }
                 val duration = Duration.between(frameBeginningTime, Instant.now())
                 delay(request.period * 1000 - duration.toMillis())

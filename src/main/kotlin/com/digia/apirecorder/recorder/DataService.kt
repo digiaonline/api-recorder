@@ -82,10 +82,11 @@ class DataService @Autowired constructor(val recordRepository: RecordRepository,
         return GlobalScope.launch(Dispatchers.IO){
             log.info("Starting recording ${request.url} for record ${request.id}")
             val recordingBeginningTime = start?:Instant.now()
-            delay(Random.nextInt(request.period) * 1000L) //random offset so that all the recordings won't start at the same time
-            while(recordingBeginningTime.plusMillis(recordingDuration * 1000L ).isAfter(Instant.now())){
-                val frameBeginningTime = Instant.now()
+            delay(Duration.between(recordingBeginningTime, Instant.now()).toMillis())
+            if(request.period == 0){
+                delay(Random.nextInt(30) * 1000L)
                 try {
+                    val frameBeginningTime = Instant.now()
                     val httpResponse = dataReader.read(url, null)
                     val responseBody = httpResponse.body?.string()
                     if (responseBody != null) {
@@ -99,8 +100,28 @@ class DataService @Autowired constructor(val recordRepository: RecordRepository,
                 catch(e : Exception){
                     log.warn("$url recording failed: ${e.message}")
                 }
-                val duration = Duration.between(frameBeginningTime, Instant.now())
-                delay(request.period * 1000 - duration.toMillis())
+            }
+            else{
+                delay(Random.nextInt(request.period) * 1000L) //random offset so that all the recordings won't start at the same time
+                while(recordingBeginningTime.plusMillis(recordingDuration * 1000L ).isAfter(Instant.now())){
+                    val frameBeginningTime = Instant.now()
+                    try {
+                        val httpResponse = dataReader.read(url, null)
+                        val responseBody = httpResponse.body?.string()
+                        if (responseBody != null) {
+                            dataWriter.write(
+                                request,
+                                Duration.between(recordingBeginningTime, frameBeginningTime).toMillis() / 1000L,
+                                responseBody
+                            )
+                        }
+                    }
+                    catch(e : Exception){
+                        log.warn("$url recording failed: ${e.message}")
+                    }
+                    val duration = Duration.between(frameBeginningTime, Instant.now())
+                    delay(request.period * 1000 - duration.toMillis())
+                }
             }
             log.info("Finished recording for record ${request.id}")
         }

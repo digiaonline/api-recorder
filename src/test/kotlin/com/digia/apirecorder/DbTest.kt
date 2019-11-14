@@ -18,7 +18,7 @@ public class DbTest @Autowired constructor(private val dataSource : DataSource, 
 
     @Test
     public fun testPersistence(){
-        val record = Record(null, "abcde", LocalDateTime.now(), null)
+        val record = Record(null, "abcde","name", "", LocalDateTime.now(),  null)
         recordRepository.save(record)
     }
 }

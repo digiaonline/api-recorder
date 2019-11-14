@@ -12,7 +12,7 @@ interface ResponseRepository : JpaRepository<Response, Long> {
 
     fun findById(id : Int) : Response?
     fun findByRequestId(requestId : Int) : List<Response>?
-    @Query("SELECT r from Response r WHERE r.request = ?1 AND r.timeOffset <= ?2 ORDER BY timeOffset")
+    @Query("SELECT r from Response r WHERE r.request = ?1 AND r.timeOffset <= ?2 ORDER BY timeOffset DESC")
     fun findByRequestAndTimeOffset(request: Request, timeOffset : Int, pageRequest : PageRequest) : List<Response>
 }
 

@@ -9,5 +9,7 @@ data class Record(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id : Int?,
     val uuid : String,
+    val name : String?,
+    val definition : String,
     val start : LocalDateTime,
     var end : LocalDateTime?)

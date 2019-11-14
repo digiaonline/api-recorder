@@ -87,7 +87,7 @@ class PlayerController @Autowired constructor(val playerService : PlayerService)
     @PutMapping("/player/{uuid}/offset/{offset}")
     fun offset(@PathVariable("uuid") playUuid : String, @PathVariable("offset") offset : Int) : HttpEntity<*> {
         return try {
-            playerService.updateActivePlay(playUuid, offset)
+            playerService.updateActivePlay(playUuid, speed= null, offset= offset)
             ResponseEntity("", HttpStatus.OK)
         }
         catch(e : Exception){

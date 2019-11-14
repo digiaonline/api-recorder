@@ -23,10 +23,7 @@ class RecorderController @Autowired constructor(val dataService : DataService){
     fun startRecording(@RequestBody startSingleRecordRequest : StartSingleRecordRequestDTO) : HttpEntity<*> {
         return try{
             val uuid = dataService.startRecording(
-                startSingleRecordRequest.url,
-                startSingleRecordRequest.period,
-                startSingleRecordRequest.duration,
-                if(startSingleRecordRequest.start != null) Instant.parse(startSingleRecordRequest.start) else null
+                startSingleRecordRequest
             )
              ResponseEntity(uuid, HttpStatus.CREATED)
         }
@@ -40,9 +37,7 @@ class RecorderController @Autowired constructor(val dataService : DataService){
     fun startRecording(@RequestBody startRecordingSetRequest : StartRecordingSetRequestDTO) : HttpEntity<*> {
         return try{
             val uuid = dataService.startRecording(
-                startRecordingSetRequest.urlsToRecord,
-                startRecordingSetRequest.duration,
-                if(startRecordingSetRequest.start != null) Instant.parse(startRecordingSetRequest.start) else null
+                startRecordingSetRequest
             )
             ResponseEntity(uuid, HttpStatus.CREATED)
         }

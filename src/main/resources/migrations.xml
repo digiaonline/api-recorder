@@ -7,4 +7,5 @@
 
     <include file="migrations/001-create-recorder.sql" relativeToChangelogFile="true" />
     <include file="migrations/002-add-name-and-definition-to-record.sql" relativeToChangelogFile="true" />
+    <include file="migrations/003-add-same-data-column.sql" relativeToChangelogFile="true" />
 </databaseChangeLog>

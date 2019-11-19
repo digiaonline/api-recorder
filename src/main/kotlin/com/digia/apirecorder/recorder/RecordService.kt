@@ -92,13 +92,17 @@ class RecordService @Autowired constructor(val recordRepository: RecordRepositor
             if(request.period == 0){
                 delay(Random.nextInt(30) * 1000L)
                 try {
+                    val requestTime = Instant.now()
                     val httpResponse = dataReader.read(url, null)
+                    val responseTime = Instant.now()
                     val responseBody = httpResponse.body?.string()
                     if (responseBody != null) {
                         dataWriter.write(
                             request,
                             0,
-                            responseBody
+                            responseBody,
+                            httpResponse.code,
+                            Duration.between(requestTime, responseTime).toMillis()
                         )
                     }
                 }
@@ -111,13 +115,17 @@ class RecordService @Autowired constructor(val recordRepository: RecordRepositor
                 while(recordingBeginningTime.plusMillis(recordingDuration * 1000L ).isAfter(Instant.now())){
                     val frameBeginningTime = Instant.now()
                     try {
+                        val requestTime = Instant.now()
                         val httpResponse = dataReader.read(url, null)
+                        val responseTime = Instant.now()
                         val responseBody = httpResponse.body?.string()
                         if (responseBody != null) {
                             dataWriter.write(
                                 request,
                                 Duration.between(recordingBeginningTime, frameBeginningTime).toMillis() / 1000L,
-                                responseBody
+                                responseBody,
+                                httpResponse.code,
+                                Duration.between(requestTime, responseTime).toMillis()
                             )
                         }
                     }

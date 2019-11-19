@@ -20,7 +20,7 @@ import kotlin.collections.RandomAccess
 import kotlin.random.Random
 
 @Service
-class DataService @Autowired constructor(val recordRepository: RecordRepository, val requestRepository: RequestRepository, val dataWriter: DataWriterService, val dataReader: DataReaderService) {
+class RecordService @Autowired constructor(val recordRepository: RecordRepository, val requestRepository: RequestRepository, val dataWriter: DataWriterService, val dataReader: DataReaderService) {
 
     private val log = KotlinLogging.logger {}
     private val activeRecordings : MutableMap<String, MutableSet<Job>> = mutableMapOf()
@@ -139,6 +139,10 @@ class DataService @Autowired constructor(val recordRepository: RecordRepository,
             recordSet.end = LocalDateTime.now()
             recordRepository.save(recordSet)
         }
+    }
+
+    fun listRecordings() : List<Record>{
+        return recordRepository.findAll();
     }
 
 }

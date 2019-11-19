@@ -3,26 +3,27 @@ package com.digia.apirecorder.recorder
 import com.digia.apirecorder.recorder.dto.StartRecordingSetRequestDTO
 import com.digia.apirecorder.recorder.dto.StartSingleRecordRequestDTO
 import mu.KotlinLogging
-import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import java.time.Instant
+import org.springframework.web.bind.annotation.*
 
 @Controller
-class RecorderController @Autowired constructor(val dataService : DataService){
+@RequestMapping("/record")
+class RecorderController @Autowired constructor(val recorderService : RecordService){
 
     private val log = KotlinLogging.logger {}
 
-    @PostMapping("/record/single/start")
+    /**
+     * @param startSingleRecordRequest : recording request for a single url
+     * @return the recording uuid
+     */
+    @PostMapping("/start/single")
     fun startRecording(@RequestBody startSingleRecordRequest : StartSingleRecordRequestDTO) : HttpEntity<*> {
         return try{
-            val uuid = dataService.startRecording(
+            val uuid = recorderService.startRecording(
                 startSingleRecordRequest
             )
              ResponseEntity(uuid, HttpStatus.CREATED)
@@ -33,10 +34,14 @@ class RecorderController @Autowired constructor(val dataService : DataService){
         }
     }
 
-    @PostMapping("/record/set/start")
+    /**
+     * @param startRecordingSetRequest: recording request for a url set
+     * @return the recording uuid
+     */
+    @PostMapping("/start/set")
     fun startRecording(@RequestBody startRecordingSetRequest : StartRecordingSetRequestDTO) : HttpEntity<*> {
         return try{
-            val uuid = dataService.startRecording(
+            val uuid = recorderService.startRecording(
                 startRecordingSetRequest
             )
             ResponseEntity(uuid, HttpStatus.CREATED)
@@ -47,9 +52,21 @@ class RecorderController @Autowired constructor(val dataService : DataService){
         }
     }
 
-    @PostMapping("record/stop/{recordingId}")
+    /**
+     * @param recordingId: the recording uuid to stop
+     * @return OK
+     */
+    @PostMapping("/stop/{recordingId}")
     fun stopRecording(@PathVariable("recordingId") recordingId : String) : HttpEntity<*>{
-        dataService.stopRecording(recordingId)
+        recorderService.stopRecording(recordingId)
         return ResponseEntity("Record $recordingId stopped", HttpStatus.OK)
+    }
+
+    /**
+     * @return list of records
+     */
+    @GetMapping("/list")
+    fun listRecorders() : HttpEntity<*>{
+        return ResponseEntity(recorderService.listRecordings(), HttpStatus.OK)
     }
 }

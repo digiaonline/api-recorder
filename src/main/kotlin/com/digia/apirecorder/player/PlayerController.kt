@@ -6,17 +6,15 @@ import org.springframework.http.HttpEntity
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.*
 
 @Controller
+@RequestMapping("/player")
 class PlayerController @Autowired constructor(val playerService : PlayerService) {
 
     private val log = KotlinLogging.logger {}
 
-    @PostMapping("/player/{uuid}/create")
+    @PostMapping("/{uuid}/create")
     fun createPlay(@PathVariable("uuid") recordUuid : String) : HttpEntity<*> {
         return try{
             val playUuid = playerService.create(recordUuid)
@@ -28,7 +26,7 @@ class PlayerController @Autowired constructor(val playerService : PlayerService)
         }
     }
 
-    @PostMapping("/player/{uuid}/remove")
+    @PostMapping("/{uuid}/remove")
     fun removePlay(@PathVariable("uuid") playUuid : String) : HttpEntity<*> {
         return try{
             playerService.remove(playUuid)
@@ -40,7 +38,7 @@ class PlayerController @Autowired constructor(val playerService : PlayerService)
     }
 
 
-    @PutMapping("/player/{uuid}/stop")
+    @PutMapping("/{uuid}/stop")
     fun stopPlay(@PathVariable("uuid") playUuid : String) : HttpEntity<*> {
         return try{
             playerService.updateActivePlay(playUuid, 0, 0)
@@ -51,7 +49,7 @@ class PlayerController @Autowired constructor(val playerService : PlayerService)
         }
     }
 
-    @PutMapping("/player/{uuid}/pause")
+    @PutMapping("/{uuid}/pause")
     fun pausePlay(@PathVariable("uuid") playUuid : String) : HttpEntity<*> {
         return try{
             playerService.updateActivePlay(playUuid, 0)
@@ -62,7 +60,7 @@ class PlayerController @Autowired constructor(val playerService : PlayerService)
         }
     }
 
-    @PutMapping("/player/{uuid}/play")
+    @PutMapping("/{uuid}/play")
     fun play(@PathVariable("uuid") playUuid : String) : HttpEntity<*> {
         return try {
             playerService.updateActivePlay(playUuid, 1)
@@ -73,7 +71,7 @@ class PlayerController @Autowired constructor(val playerService : PlayerService)
         }
     }
 
-    @PutMapping("/player/{uuid}/speed/{speed}")
+    @PutMapping("/{uuid}/speed/{speed}")
     fun speed(@PathVariable("uuid") playUuid : String, @PathVariable("speed") speed : Int) : HttpEntity<*> {
         return try {
             playerService.updateActivePlay(playUuid, speed)
@@ -84,7 +82,7 @@ class PlayerController @Autowired constructor(val playerService : PlayerService)
         }
     }
 
-    @PutMapping("/player/{uuid}/offset/{offset}")
+    @PutMapping("/{uuid}/offset/{offset}")
     fun offset(@PathVariable("uuid") playUuid : String, @PathVariable("offset") offset : Int) : HttpEntity<*> {
         return try {
             playerService.updateActivePlay(playUuid, speed= null, offset= offset)
@@ -92,6 +90,16 @@ class PlayerController @Autowired constructor(val playerService : PlayerService)
         }
         catch(e : Exception){
             ResponseEntity(e.message, HttpStatus.BAD_REQUEST)
+        }
+    }
+
+    @GetMapping("/list")
+    fun listPlayers() : HttpEntity<*>{
+        return try{
+            ResponseEntity(playerService.getActivePlays(), HttpStatus.OK)
+        }
+        catch(e : Exception){
+            ResponseEntity(e.message, HttpStatus.INTERNAL_SERVER_ERROR)
         }
     }
 }

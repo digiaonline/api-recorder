@@ -9,7 +9,6 @@ fun main(args: Array<String>) {
     runApplication<RecorderApplication>(*args)
 }
 
-
 @SpringBootApplication
 @EnableJpaRepositories
 class RecorderApplication

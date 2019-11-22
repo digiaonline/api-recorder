@@ -88,7 +88,7 @@ class RecordService @Autowired constructor(val recordRepository: RecordRepositor
         return GlobalScope.launch(Dispatchers.IO){
             log.info("Starting recording ${request.url} for record ${request.id}")
             val recordingBeginningTime = start?:Instant.now()
-            delay(Duration.between(recordingBeginningTime, Instant.now()).toMillis())
+            delay(Duration.between(Instant.now(), recordingBeginningTime).toMillis())
             if(request.period == 0){
                 delay(Random.nextInt(30) * 1000L)
                 try {

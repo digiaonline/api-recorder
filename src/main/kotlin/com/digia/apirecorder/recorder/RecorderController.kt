@@ -11,7 +11,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
 
 @Controller
-@RequestMapping("/record")
+@RequestMapping("/api/record")
 class RecorderController @Autowired constructor(val recorderService : RecordService){
 
     private val log = KotlinLogging.logger {}

@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner
 import java.time.LocalDateTime
 import javax.sql.DataSource
 
+/*
 @RunWith(SpringRunner::class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -22,3 +23,4 @@ public class DbTest @Autowired constructor(private val dataSource : DataSource, 
         recordRepository.save(record)
     }
 }
+*/

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
 
 @Controller
-@RequestMapping("/player")
+@RequestMapping("/api/player")
 class PlayerController @Autowired constructor(val playerService : PlayerService) {
 
     private val log = KotlinLogging.logger {}
@@ -96,7 +96,7 @@ class PlayerController @Autowired constructor(val playerService : PlayerService)
     @GetMapping("/list")
     fun listPlayers() : HttpEntity<*>{
         return try{
-            ResponseEntity(playerService.getActivePlays(), HttpStatus.OK)
+            ResponseEntity(playerService.getActivePlays().values, HttpStatus.OK)
         }
         catch(e : Exception){
             ResponseEntity(e.message, HttpStatus.INTERNAL_SERVER_ERROR)

@@ -1,38 +1,37 @@
 package com.digia.apirecorder.watcher
 
 import com.digia.apirecorder.player.PlayerService
-import com.digia.apirecorder.persistence.RecordRepository
-import com.digia.apirecorder.persistence.RequestRepository
-import com.digia.apirecorder.persistence.ResponseRepository
-import com.digia.apirecorder.persistence.findTopByRequestAndTimeOffset
+import com.digia.apirecorder.recorder.persistence.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.*
+import org.springframework.web.context.request.RequestContextHolder
+import org.springframework.web.context.request.ServletRequestAttributes
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
-import org.springframework.web.util.UriComponentsBuilder
 
 @Controller
 class WatchController @Autowired constructor(
-     val playerService: PlayerService,
-     val recordRepository: RecordRepository,
-     val requestRepository: RequestRepository,
-     val responseRepository: ResponseRepository){
+    val playerService: PlayerService,
+    val recordRepository: RecordRepository,
+    val requestRepository: RequestRepository,
+    val responseRepository: ResponseRepository
+){
 
-    @GetMapping("/watch/{uuid}/url/**")
-    fun watchGet(@PathVariable("uuid") playUuid : String, uriComponentsBuilder : UriComponentsBuilder) : HttpEntity<*> {
+    @RequestMapping("/watch/{uuid}/url/**")
+    fun watch(@PathVariable("uuid") playUuid : String, @RequestBody body : String?, @RequestHeader headers : Map<String, String>?) : HttpEntity<*> {
         val activePlay = playerService.getActivePlay(playUuid)
         return if(activePlay == null){
-            ResponseEntity("Unknown play uuid", HttpStatus.BAD_REQUEST)
+            ResponseEntity("Unknown player uuid", HttpStatus.BAD_REQUEST)
         }
         else{
             val record = recordRepository.findByUuid(activePlay.recordUuid)
             val url = ServletUriComponentsBuilder.fromCurrentRequest().toUriString().substringAfter("/url/")
-            val request = requestRepository.findTopByRecordAndUrl(record!!, url)
+            val requestAttributes = RequestContextHolder.getRequestAttributes() as ServletRequestAttributes
+            val method = requestAttributes.request.method
+            val request = requestRepository.findTopByRecordAndMethodAndBodyAndUrl(record!!, method, body, url)
             if(request != null){
                 val response = responseRepository.findTopByRequestAndTimeOffset(request, activePlay.currentOffset)
                 ResponseEntity(response!!.body, HttpStatus.OK)

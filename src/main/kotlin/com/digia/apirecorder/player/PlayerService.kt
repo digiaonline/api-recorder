@@ -1,6 +1,6 @@
 package com.digia.apirecorder.player
 
-import com.digia.apirecorder.persistence.RecordRepository
+import com.digia.apirecorder.recorder.persistence.RecordRepository
 import kotlinx.coroutines.*
 import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Autowired

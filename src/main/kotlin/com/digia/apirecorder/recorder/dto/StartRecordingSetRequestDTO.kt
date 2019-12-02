@@ -20,7 +20,7 @@ data class StartRecordingSetRequestDTO(val urlsToRecord : Array<UrlToRecord>, va
     }
 }
 
-data class UrlToRecord(val url : String, val parameters : Array<ParametersDTO>?, val period : Int) {
+data class UrlToRecord(val url : String, val parameters : Array<ParametersDTO>?, val period : Int, val body : String?, val headers : Map<String, String>?, val method : String = "GET" ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

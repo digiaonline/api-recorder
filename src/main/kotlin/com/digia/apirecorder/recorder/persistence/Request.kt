@@ -1,4 +1,4 @@
-package com.digia.apirecorder.persistence
+package com.digia.apirecorder.recorder.persistence
 
 import javax.persistence.*
 
@@ -11,4 +11,9 @@ data class Request(
     @JoinColumn(name="record_id", nullable = false)
     val record : Record,
     val period : Int,
-    val url : String)
+    val url : String,
+    val method : String,
+    @Convert(converter = MapToStringConverter::class)
+    val headers : Map<String, String>?,
+    val body : String?
+)

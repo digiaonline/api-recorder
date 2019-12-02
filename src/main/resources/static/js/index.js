@@ -9,7 +9,7 @@ function listRecordings(){
 }
 
 function refreshPlayerList(){
-    if($("#playerTable") != undefined){
+    if($("#playerTable").length > 0){
         listPlayers();
     }
 }
@@ -18,14 +18,22 @@ function listPlayers(){
     $.get("/api/player/list", function(data, status){buildPlayerList(data, status);});
 }
 
+var records;
+
 function buildRecordList(data, status){
     var newHtml = "<table id='recordTable'><tr><th>Name</th><th>Start (UTC)</th><th>End (UTC)</th><th>uuid</th><th>Definition</th><th></th></tr>";
     for(var i = 0 ; i < data.length ; i++){
         var recordItem = data[i];
-        newHtml += "<tr><td>" + recordItem.name + "</td><td>" + recordItem.start + "</td><td>" + recordItem.end + "</td><td>" + recordItem.uuid + "</td><td> Open </td><td><button id='createplayer' onclick=\"createPlayer('" + recordItem.uuid + "')\">Create a player</button><button id='deleterecording'>Delete</button></td></tr>";
+        newHtml += "<tr><td>" + recordItem.name + "</td><td>" + recordItem.start + "</td><td>" + recordItem.end + "</td><td>" + recordItem.uuid + "</td><td><a href='#' onclick=\"displayDefinition(" + i + ")\" > Show</a></td><td><button id='createplayer' onclick=\"createPlayer('" + recordItem.uuid + "')\">Create a player</button><button id='deleterecording'>Delete</button></td></tr>";
     }
     newHtml += "</table>";
+    records = data;
     $("#content").html(newHtml);
+}
+
+function displayDefinition(i){
+    var newWindow = window.open("");
+    newWindow.document.write(records[i].definition);
 }
 
 function createPlayer(recordUuid){

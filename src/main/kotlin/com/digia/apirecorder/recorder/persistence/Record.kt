@@ -1,4 +1,4 @@
-package com.digia.apirecorder.persistence
+package com.digia.apirecorder.recorder.persistence
 
 import java.time.LocalDateTime
 import javax.persistence.*

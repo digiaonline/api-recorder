@@ -6,14 +6,17 @@ import java.util.HashMap
 import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
+import org.springframework.util.LinkedMultiValueMap
+import org.springframework.util.MultiValueMap
+import java.net.http.HttpHeaders
 import javax.persistence.AttributeConverter
 
 
 @Converter
-class MapToStringConverter : AttributeConverter<Map<String, String>, String> {
+class MapToStringConverter : AttributeConverter<Map<String, List<String>>, String> {
     private var mapper = ObjectMapper()
 
-    override fun convertToDatabaseColumn(data: Map<String, String>?): String {
+    override fun convertToDatabaseColumn(data: Map<String, List<String>>?): String {
         var value = ""
         if(data == null){
             return value
@@ -27,14 +30,14 @@ class MapToStringConverter : AttributeConverter<Map<String, String>, String> {
         return value
     }
 
-    override fun convertToEntityAttribute(data: String?): Map<String, String>? {
+    override fun convertToEntityAttribute(data: String?): Map<String, List<String>>? {
         if(data == null) return null
-        var mapValue: Map<String, String> = HashMap()
-        val typeRef = object : TypeReference<HashMap<String, Any>>() {
+        var mapValue: Map<String, List<String>> = HashMap()
+        val typeRef = object : TypeReference<HashMap<String, List<String>>>() {
 
         }
         try {
-            mapValue = mapper.readValue<Map<String, String>>(data, typeRef)
+            mapValue = mapper.readValue<Map<String, List<String>>>(data, typeRef)
         } catch (e: IOException) {
             e.printStackTrace()
         }

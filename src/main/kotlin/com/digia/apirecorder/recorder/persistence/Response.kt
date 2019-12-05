@@ -1,5 +1,6 @@
 package com.digia.apirecorder.recorder.persistence
 
+import org.springframework.util.MultiValueMap
 import java.time.LocalDateTime
 import javax.persistence.*
 
@@ -18,12 +19,12 @@ data class Response(
     @Enumerated(EnumType.STRING)
     val type: ResponseType,
     @Column(name = "response_code", nullable = false)
-    val responseCode : Int?,
+    val responseCode : Int,
     @Column(name = "response_time", nullable = false)
     val responseTime : Long,
     val hash : ByteArray?,
     @Convert(converter = MapToStringConverter::class)
-    val headers : Map<String, String>?
+    val headers :  Map<String, List<String>>?
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

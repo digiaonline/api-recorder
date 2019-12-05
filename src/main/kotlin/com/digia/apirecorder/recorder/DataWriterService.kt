@@ -37,7 +37,7 @@ class DataWriterService @Autowired constructor(val responseRepository : Response
                 response.code,
                 responseTime,
                 hash,
-                response.headers.toMap()
+                response.headers.toMultimap()
             )
         }
         else{
@@ -52,7 +52,7 @@ class DataWriterService @Autowired constructor(val responseRepository : Response
                 response.code,
                 responseTime,
                 hash,
-                response.headers.toMap()
+                response.headers.toMultimap()
             )
         }
         responseRepository.save(frame)

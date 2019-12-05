@@ -7,6 +7,8 @@ import org.springframework.http.HttpEntity
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
+import org.springframework.util.LinkedMultiValueMap
+import org.springframework.util.MultiValueMap
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.context.request.RequestContextHolder
 import org.springframework.web.context.request.ServletRequestAttributes
@@ -32,13 +34,19 @@ class WatchController @Autowired constructor(
             val requestAttributes = RequestContextHolder.getRequestAttributes() as ServletRequestAttributes
             val method = requestAttributes.request.method
             val request = requestRepository.findTopByRecordAndMethodAndBodyAndUrl(record!!, method, body, url)
-            if(request != null){
+            val responseEntity = if (request != null) {
                 val response = responseRepository.findTopByRequestAndTimeOffset(request, activePlay.currentOffset)
-                ResponseEntity(response!!.body, HttpStatus.OK)
-            }
-            else{
+                val linkedMultiValueMap = LinkedMultiValueMap<String, String>()
+                response?.headers?.forEach {(key, value) -> linkedMultiValueMap[key] = value }
+                ResponseEntity(
+                    response!!.body,
+                    linkedMultiValueMap,
+                    HttpStatus.resolve(response.responseCode) ?: HttpStatus.OK
+                )
+            } else {
                 ResponseEntity("Unknown request", HttpStatus.BAD_REQUEST)
             }
+            responseEntity
         }
     }
 }

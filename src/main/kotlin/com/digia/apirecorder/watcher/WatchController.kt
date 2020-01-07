@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.util.LinkedMultiValueMap
-import org.springframework.util.MultiValueMap
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.context.request.RequestContextHolder
 import org.springframework.web.context.request.ServletRequestAttributes
@@ -36,10 +35,11 @@ class WatchController @Autowired constructor(
             val request = requestRepository.findTopByRecordAndMethodAndBodyAndUrl(record!!, method, body, url)
             val responseEntity = if (request != null) {
                 val response = responseRepository.findTopByRequestAndTimeOffset(request, activePlay.currentOffset)
+                    ?: return ResponseEntity("No recorded value at offset ${activePlay.currentOffset} for the request", HttpStatus.NOT_FOUND)
                 val linkedMultiValueMap = LinkedMultiValueMap<String, String>()
-                response?.headers?.forEach {(key, value) -> linkedMultiValueMap[key] = value }
+                response.headers?.forEach {(key, value) -> linkedMultiValueMap[key] = value }
                 ResponseEntity(
-                    response!!.body,
+                    response.customBody?: response.responseBody.body,
                     linkedMultiValueMap,
                     HttpStatus.resolve(response.responseCode) ?: HttpStatus.OK
                 )

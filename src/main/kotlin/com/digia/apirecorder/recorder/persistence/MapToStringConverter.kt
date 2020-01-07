@@ -18,7 +18,7 @@ class MapToStringConverter : AttributeConverter<Map<String, List<String>>, Strin
 
     override fun convertToDatabaseColumn(data: Map<String, List<String>>?): String {
         var value = ""
-        if(data == null){
+        if(data == null || data.isEmpty()){
             return value
         }
         try {
@@ -31,7 +31,7 @@ class MapToStringConverter : AttributeConverter<Map<String, List<String>>, Strin
     }
 
     override fun convertToEntityAttribute(data: String?): Map<String, List<String>>? {
-        if(data == null) return null
+        if(data == null || data.isEmpty()) return null
         var mapValue: Map<String, List<String>> = HashMap()
         val typeRef = object : TypeReference<HashMap<String, List<String>>>() {
 

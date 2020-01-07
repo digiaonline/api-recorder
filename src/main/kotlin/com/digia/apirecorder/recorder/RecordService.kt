@@ -1,6 +1,6 @@
 package com.digia.apirecorder.recorder
 
-import com.digia.apirecorder.recorder.dto.UrlToRecord
+import com.digia.apirecorder.recorder.dto.ParametersDTO
 import com.digia.apirecorder.recorder.dto.StartRecordingSetRequestDTO
 import com.digia.apirecorder.recorder.dto.StartSingleRecordRequestDTO
 import com.digia.apirecorder.recorder.persistence.Record
@@ -13,13 +13,11 @@ import mu.KotlinLogging
 
 
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.jackson.JsonObjectSerializer
 import org.springframework.stereotype.Service
 import java.time.Duration
 import java.time.Instant
 import java.time.LocalDateTime
 import java.util.*
-import kotlin.collections.RandomAccess
 import kotlin.random.Random
 
 @Service
@@ -69,30 +67,13 @@ class RecordService @Autowired constructor(val recordRepository: RecordRepositor
         recordRepository.save(record)
         activeRecordings[uuid] = mutableSetOf()
         for(urlToRecord in startRecordingSetRequest.urlsToRecord){
-            if(urlToRecord.parameters != null){
+            if(urlToRecord.parameters != null || startRecordingSetRequest.globalParameters != null){
                 //Creating urls based on parameters
-                var urlsWithoutInjectedParameters = listOf<String>(urlToRecord.url)
-                for(parameter in urlToRecord.parameters){
-                    val urlsWithInjectedParameters = mutableListOf<String>()
-                    for(urlToUpdate in urlsWithoutInjectedParameters){
-                        for(parameterValue in parameter.values){
-                            if(!parameterValue.contains("...")){
-                                urlsWithInjectedParameters.add(urlToUpdate.replace(parameter.name, parameterValue))
-                            }
-                            else{
-                                val firstValue = Integer.parseInt(parameterValue.substringBefore("..."))
-                                val lastValue = Integer.parseInt(parameterValue.substringAfter("..."))
-                                for(i in firstValue .. lastValue){
-                                    urlsWithInjectedParameters.add(urlToUpdate.replace(parameter.name, i.toString()))
-                                }
-                            }
-
-                        }
-                    }
-                    urlsWithoutInjectedParameters = urlsWithInjectedParameters
-                }
+                var urls = listOf<String>(urlToRecord.url)
+                if(urlToRecord.parameters != null) urls = injectParameters(urls, urlToRecord.parameters)
+                if(startRecordingSetRequest.globalParameters != null) urls = injectParameters(urls, startRecordingSetRequest.globalParameters)
                 //Creating jobs based on the urls
-                for(url in urlsWithoutInjectedParameters){
+                for(url in urls){
                     val request = Request(
                         null,
                         record,
@@ -123,6 +104,36 @@ class RecordService @Autowired constructor(val recordRepository: RecordRepositor
             }
         }
         return uuid
+    }
+
+    private fun injectParameters(urls : List<String>, parameters : Array<ParametersDTO>) : List<String>{
+        var sourceUrlList = mutableListOf<String>()
+        sourceUrlList.addAll(urls)
+        for(parameter in parameters){
+            val resultUrlList = mutableListOf<String>()
+            for(urlToUpdate in sourceUrlList){
+                if(urlToUpdate.contains(parameter.name)){
+                    for(parameterValue in parameter.values){
+                        if(!parameterValue.contains("...")){
+                            resultUrlList.add(urlToUpdate.replace(parameter.name, parameterValue))
+                        }
+                        else{
+                            val firstValue = Integer.parseInt(parameterValue.substringBefore("..."))
+                            val lastValue = Integer.parseInt(parameterValue.substringAfter("..."))
+                            for(i in firstValue .. lastValue){
+                                resultUrlList.add(urlToUpdate.replace(parameter.name, i.toString()))
+                            }
+                        }
+                    }
+                }
+                else{
+                    resultUrlList.add(urlToUpdate)
+                }
+
+            }
+            sourceUrlList = resultUrlList
+        }
+        return sourceUrlList
     }
 
     private fun startRecordingJob(url : String, headers : Map<String, String>?, body : String?, method : String, request : Request, recordingDuration : Long, start : Instant?) : Job{

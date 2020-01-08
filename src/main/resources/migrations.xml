@@ -9,4 +9,5 @@
     <include file="migrations/002-add-name-and-definition-to-record.sql" relativeToChangelogFile="true" />
     <include file="migrations/003-add-same-data-column.sql" relativeToChangelogFile="true" />
     <include file="migrations/004-add-request-header-and-body.sql" relativeToChangelogFile="true" />
+    <include file="migrations/005-create-response-body.sql" relativeToChangelogFile="true" />
 </databaseChangeLog>

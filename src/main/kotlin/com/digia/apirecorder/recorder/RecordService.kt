@@ -3,10 +3,7 @@ package com.digia.apirecorder.recorder
 import com.digia.apirecorder.recorder.dto.ParametersDTO
 import com.digia.apirecorder.recorder.dto.StartRecordingSetRequestDTO
 import com.digia.apirecorder.recorder.dto.StartSingleRecordRequestDTO
-import com.digia.apirecorder.recorder.persistence.Record
-import com.digia.apirecorder.recorder.persistence.RecordRepository
-import com.digia.apirecorder.recorder.persistence.Request
-import com.digia.apirecorder.recorder.persistence.RequestRepository
+import com.digia.apirecorder.recorder.persistence.*
 import com.fasterxml.jackson.databind.ObjectMapper
 import kotlinx.coroutines.*
 import mu.KotlinLogging
@@ -30,7 +27,7 @@ class RecordService @Autowired constructor(val recordRepository: RecordRepositor
     fun startRecording(startSingleRecordRequest : StartSingleRecordRequestDTO) : String{
         val uuid = UUID.randomUUID().toString()
 
-        val recordSet = Record(
+        val record = Record(
             null,
             uuid,
             startSingleRecordRequest.name,
@@ -38,18 +35,20 @@ class RecordService @Autowired constructor(val recordRepository: RecordRepositor
             LocalDateTime.now(),
             LocalDateTime.now().plusSeconds(startSingleRecordRequest.duration)
         )
-        val record = Request(
+        val request = Request(
             null,
-            recordSet,
+            record,
             startSingleRecordRequest.period,
             startSingleRecordRequest.url.substringAfter("://"),
             startSingleRecordRequest.method,
             startSingleRecordRequest.headers,
-            startSingleRecordRequest.body
+            startSingleRecordRequest.body,
+            startSingleRecordRequest.feedItemPath,
+            null
         )
-        recordRepository.save(recordSet)
-        requestRepository.save(record)
-        val job = startRecordingJob(startSingleRecordRequest.url, startSingleRecordRequest.headers, startSingleRecordRequest.body, startSingleRecordRequest.method, record, startSingleRecordRequest.duration, if(startSingleRecordRequest.start != null) Instant.parse(startSingleRecordRequest.start) else null)
+        recordRepository.save(record)
+        requestRepository.save(request)
+        val job = startRecordingJob(startSingleRecordRequest.url, request, startSingleRecordRequest.duration, if(startSingleRecordRequest.start != null) Instant.parse(startSingleRecordRequest.start) else null)
         activeRecordings[uuid] = mutableSetOf(job)
         return uuid
     }
@@ -81,10 +80,12 @@ class RecordService @Autowired constructor(val recordRepository: RecordRepositor
                         url.substringAfter("://"),
                         urlToRecord.method,
                         urlToRecord.headers,
-                        urlToRecord.body
+                        urlToRecord.body,
+                        null,
+                        null
                     )
                     requestRepository.save(request)
-                    val job = startRecordingJob(url, urlToRecord.headers, urlToRecord.body, urlToRecord.method, request, startRecordingSetRequest.duration, if(startRecordingSetRequest.start != null) Instant.parse(startRecordingSetRequest.start) else null)
+                    val job = startRecordingJob(url, request, startRecordingSetRequest.duration, if(startRecordingSetRequest.start != null) Instant.parse(startRecordingSetRequest.start) else null)
                     activeRecordings[uuid]!!.add(job)
                 }
             }
@@ -96,10 +97,12 @@ class RecordService @Autowired constructor(val recordRepository: RecordRepositor
                     urlToRecord.url.substringAfter("://"),
                     urlToRecord.method,
                     urlToRecord.headers,
-                    urlToRecord.body
+                    urlToRecord.body,
+                    null,
+                    null
                 )
                 requestRepository.save(request)
-                val job = startRecordingJob(urlToRecord.url, urlToRecord.headers, urlToRecord.body, urlToRecord.method,  request, startRecordingSetRequest.duration, if(startRecordingSetRequest.start != null) Instant.parse(startRecordingSetRequest.start) else null)
+                val job = startRecordingJob(urlToRecord.url, request, startRecordingSetRequest.duration, if(startRecordingSetRequest.start != null) Instant.parse(startRecordingSetRequest.start) else null)
                 activeRecordings[uuid]!!.add(job)
             }
         }
@@ -136,23 +139,26 @@ class RecordService @Autowired constructor(val recordRepository: RecordRepositor
         return sourceUrlList
     }
 
-    private fun startRecordingJob(url : String, headers : Map<String, String>?, body : String?, method : String, request : Request, recordingDuration : Long, start : Instant?) : Job{
+    private fun startRecordingJob(url : String, request : Request, recordingDuration : Long, start : Instant?) : Job{
         return GlobalScope.launch(Dispatchers.IO){
-            log.info("Starting recording ${request.url} for record ${request.id}")
+            log.info("Starting recording $url for record ${request.id}")
             val recordingBeginningTime = start?:Instant.now()
             delay(Duration.between(Instant.now(), recordingBeginningTime).toMillis())
             if(request.period == 0){
                 delay(Random.nextInt(30) * 1000L)
                 try {
                     val requestTime = Instant.now()
-                    val httpResponse = dataReader.read(url, headers, body, method)
+                    val httpResponse = dataReader.read(url, request.headers, request.body, request.method)
                     val responseTime = Instant.now()
-                    dataWriter.write(
+                    val response = dataWriter.write(
                         request,
                         0,
                         httpResponse,
                         Duration.between(requestTime, responseTime).toMillis()
                     )
+                    if(request.feedItemPath != null && response.type == ResponseType.NEW){
+
+                    }
                 }
                 catch(e : Exception){
                     log.warn("$url recording failed: ${e.message}")
@@ -164,7 +170,7 @@ class RecordService @Autowired constructor(val recordRepository: RecordRepositor
                     val frameBeginningTime = Instant.now()
                     try {
                         val requestTime = Instant.now()
-                        val httpResponse = dataReader.read(url, headers, body, method)
+                        val httpResponse = dataReader.read(url, request.headers, request.body, request.method)
                         val responseTime = Instant.now()
                         dataWriter.write(
                             request,

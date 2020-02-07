@@ -15,5 +15,7 @@ data class Request(
     val method : String,
     @Convert(converter = MapToStringConverter::class)
     val headers : Map<String, String>?,
-    val body : String?
+    val body : String?,
+    val feedItemPath : String?,
+    val parentRequest : Request?
 )

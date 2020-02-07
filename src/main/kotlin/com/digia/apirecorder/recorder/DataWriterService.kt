@@ -17,7 +17,7 @@ class DataWriterService @Autowired constructor(val responseRepository : Response
     private val log = KotlinLogging.logger {}
     private val lastBodyHashes : MutableMap<Request, String?> = HashMap()
 
-    fun write(request : Request, timeSinceBeginning : Long, response : Okhttp3Response, responseTime : Long){
+    fun write(request : Request, timeSinceBeginning : Long, response : Okhttp3Response, responseTime : Long) : Response{
         val md = MessageDigest.getInstance("MD5")
         val previousHash = lastBodyHashes[request]
         val responseBody = response.body?.string()
@@ -60,5 +60,6 @@ class DataWriterService @Autowired constructor(val responseRepository : Response
             )
         }
         responseRepository.save(frame)
+        return frame
     }
 }

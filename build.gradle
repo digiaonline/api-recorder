@@ -62,6 +62,7 @@ dependencies {
     //JSON
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin:2.9.8"
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310"
+    implementation "com.jayway.jsonpath:json-path:2.4.0"
 
     //DB
     implementation "org.springframework.boot:spring-boot-starter-data-jpa"

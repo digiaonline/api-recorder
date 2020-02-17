@@ -1,5 +1,6 @@
 package com.digia.apirecorder.player
 
+import com.digia.apirecorder.player.dto.CreatePlayerRequestDTO
 import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpEntity
@@ -14,10 +15,10 @@ class PlayerController @Autowired constructor(val playerService : PlayerService)
 
     private val log = KotlinLogging.logger {}
 
-    @PostMapping("/{uuid}/create")
-    fun createPlay(@PathVariable("uuid") recordUuid : String) : HttpEntity<*> {
+    @PostMapping("/create")
+    fun createPlay(@RequestBody createPlayerRequestDTO: CreatePlayerRequestDTO) : HttpEntity<*> {
         return try{
-            val playUuid = playerService.create(recordUuid)
+            val playUuid = playerService.create(createPlayerRequestDTO)
             ResponseEntity(playUuid, HttpStatus.CREATED)
         }
         catch(e : Exception){

@@ -1,5 +1,6 @@
 package com.digia.apirecorder.player
 
+import com.digia.apirecorder.player.dto.CreatePlayerRequestDTO
 import com.digia.apirecorder.recorder.persistence.RecordRepository
 import kotlinx.coroutines.*
 import mu.KotlinLogging
@@ -12,7 +13,7 @@ import java.util.*
 class PlayerService @Autowired constructor(val recordRepository : RecordRepository){
 
     private val log = KotlinLogging.logger {}
-    private val activePlays : MutableMap<String, ActivePlay> = mutableMapOf()
+    private val activePlays : MutableMap<String, Player> = mutableMapOf()
     private val ticker : Job = GlobalScope.launch(Dispatchers.Default)
     {
         while(true) {
@@ -21,16 +22,19 @@ class PlayerService @Autowired constructor(val recordRepository : RecordReposito
         }
     }
 
-    fun getActivePlay(playUuid : String) : ActivePlay?{
+    fun getActivePlay(playUuid : String) : Player?{
         return activePlays[playUuid]
     }
 
-    fun create(recordUuid : String) :String?{
-        if(recordRepository.findByUuid(recordUuid) == null){
+    fun create(createPlayerRequestDTO : CreatePlayerRequestDTO) :String?{
+        if(recordRepository.findByUuid(createPlayerRequestDTO.recordUuid) == null){
             throw Exception("Unknown recordUuid")
         }
-        val playUuid = UUID.randomUUID().toString()
-        activePlays[playUuid] = ActivePlay(playUuid, recordUuid, 0, 0)
+        val playUuid = createPlayerRequestDTO.playerUuid?: UUID.randomUUID().toString()
+        if(activePlays[playUuid] != null){
+            throw Exception("Player uuid already exists")
+        }
+        activePlays[playUuid] = Player(playUuid, createPlayerRequestDTO.recordUuid, 0, 0)
         return playUuid
     }
 
@@ -41,7 +45,7 @@ class PlayerService @Autowired constructor(val recordRepository : RecordReposito
         activePlays.remove(playUuid)
     }
 
-    fun getActivePlays() : Map<String, ActivePlay>{
+    fun getActivePlays() : Map<String, Player>{
         return activePlays
     }
 

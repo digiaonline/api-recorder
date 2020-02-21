@@ -6,7 +6,7 @@ import javax.persistence.*
 data class Request(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id : Int?,
+    val id : Int? = null,
     @ManyToOne
     @JoinColumn(name="record_id", nullable = false)
     val record : Record,
@@ -14,8 +14,12 @@ data class Request(
     val url : String,
     val method : String,
     @Convert(converter = MapToStringConverter::class)
-    val headers : Map<String, String>?,
-    val body : String?,
-    val feedItemPath : String?,
-    val parentRequest : Request?
+    val headers : Map<String, String>? = null,
+    val body : String? = null,
+    @Column(name = "feed_item_path")
+    val feedItemPath : String? = null,
+    @ManyToOne
+    @JoinColumn(name="parent_request_id", nullable = true)
+    val parentRequest : Request? = null
 )
+

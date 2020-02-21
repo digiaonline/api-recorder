@@ -1,14 +1,14 @@
 package com.digia.apirecorder.recorder
 
+
 import com.digia.apirecorder.recorder.dto.ParametersDTO
 import com.digia.apirecorder.recorder.dto.StartRecordingSetRequestDTO
 import com.digia.apirecorder.recorder.dto.StartSingleRecordRequestDTO
 import com.digia.apirecorder.recorder.persistence.*
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.jayway.jsonpath.JsonPath
 import kotlinx.coroutines.*
 import mu.KotlinLogging
-
-
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.time.Duration
@@ -16,6 +16,7 @@ import java.time.Instant
 import java.time.LocalDateTime
 import java.util.*
 import kotlin.random.Random
+
 
 @Service
 class RecordService @Autowired constructor(val recordRepository: RecordRepository, val requestRepository: RequestRepository, val dataWriter: DataWriterService, val dataReader: DataReaderService) {
@@ -66,35 +67,17 @@ class RecordService @Autowired constructor(val recordRepository: RecordRepositor
         recordRepository.save(record)
         activeRecordings[uuid] = mutableSetOf()
         for(urlToRecord in startRecordingSetRequest.urlsToRecord){
-            if(urlToRecord.parameters != null || startRecordingSetRequest.globalParameters != null){
-                //Creating urls based on parameters
-                var urls = listOf<String>(urlToRecord.url)
-                if(urlToRecord.parameters != null) urls = injectParameters(urls, urlToRecord.parameters)
-                if(startRecordingSetRequest.globalParameters != null) urls = injectParameters(urls, startRecordingSetRequest.globalParameters)
-                //Creating jobs based on the urls
-                for(url in urls){
-                    val request = Request(
-                        null,
-                        record,
-                        urlToRecord.period,
-                        url.substringAfter("://"),
-                        urlToRecord.method,
-                        urlToRecord.headers,
-                        urlToRecord.body,
-                        null,
-                        null
-                    )
-                    requestRepository.save(request)
-                    val job = startRecordingJob(url, request, startRecordingSetRequest.duration, if(startRecordingSetRequest.start != null) Instant.parse(startRecordingSetRequest.start) else null)
-                    activeRecordings[uuid]!!.add(job)
-                }
-            }
-            else{
+            //Creating urls based on parameters
+            var urls = listOf<String>(urlToRecord.url)
+            if(urlToRecord.parameters != null) urls = injectParameters(urls, urlToRecord.parameters)
+            if(startRecordingSetRequest.globalParameters != null) urls = injectParameters(urls, startRecordingSetRequest.globalParameters)
+            //Creating jobs based on the urls
+            for(url in urls){
                 val request = Request(
                     null,
                     record,
                     urlToRecord.period,
-                    urlToRecord.url.substringAfter("://"),
+                    url.substringAfter("://"),
                     urlToRecord.method,
                     urlToRecord.headers,
                     urlToRecord.body,
@@ -102,7 +85,7 @@ class RecordService @Autowired constructor(val recordRepository: RecordRepositor
                     null
                 )
                 requestRepository.save(request)
-                val job = startRecordingJob(urlToRecord.url, request, startRecordingSetRequest.duration, if(startRecordingSetRequest.start != null) Instant.parse(startRecordingSetRequest.start) else null)
+                val job = startRecordingJob(url, request, startRecordingSetRequest.duration, if(startRecordingSetRequest.start != null) Instant.parse(startRecordingSetRequest.start) else null)
                 activeRecordings[uuid]!!.add(job)
             }
         }
@@ -132,14 +115,13 @@ class RecordService @Autowired constructor(val recordRepository: RecordRepositor
                 else{
                     resultUrlList.add(urlToUpdate)
                 }
-
             }
             sourceUrlList = resultUrlList
         }
         return sourceUrlList
     }
 
-    private fun startRecordingJob(url : String, request : Request, recordingDuration : Long, start : Instant?) : Job{
+    private fun startRecordingJob(url : String, request : Request, recordingDuration : Long, start : Instant?, knownItems : MutableSet<String> = mutableSetOf()) : Job{
         return GlobalScope.launch(Dispatchers.IO){
             log.info("Starting recording $url for record ${request.id}")
             val recordingBeginningTime = start?:Instant.now()
@@ -157,7 +139,7 @@ class RecordService @Autowired constructor(val recordRepository: RecordRepositor
                         Duration.between(requestTime, responseTime).toMillis()
                     )
                     if(request.feedItemPath != null && response.type == ResponseType.NEW){
-
+                        createFeedItems(request, response, knownItems)
                     }
                 }
                 catch(e : Exception){
@@ -172,12 +154,15 @@ class RecordService @Autowired constructor(val recordRepository: RecordRepositor
                         val requestTime = Instant.now()
                         val httpResponse = dataReader.read(url, request.headers, request.body, request.method)
                         val responseTime = Instant.now()
-                        dataWriter.write(
+                        val response = dataWriter.write(
                             request,
                             Duration.between(recordingBeginningTime, frameBeginningTime).toMillis() / 1000L,
                             httpResponse,
                             Duration.between(requestTime, responseTime).toMillis()
                         )
+                        if(request.feedItemPath != null && response.type == ResponseType.NEW){
+                            createFeedItems(request, response, knownItems)
+                        }
                     }
                     catch(e : Exception){
                         log.warn("$url recording failed: ${e.message}")
@@ -188,6 +173,26 @@ class RecordService @Autowired constructor(val recordRepository: RecordRepositor
             }
             log.info("Finished recording for record ${request.id}")
         }
+    }
+
+    fun createFeedItems(request : Request, response : Response, knownItems : MutableSet<String>){
+        //New data in the feed, let's check the new items only
+        val itemUrls = JsonPath.read<List<String>>(response.responseBody.body, request.feedItemPath)
+        itemUrls.forEach { item -> run{
+            if(!knownItems.contains(item)){
+                val subRequest = Request(
+                    record = request.record,
+                    period = 0,
+                    url = item.substringAfter("://"),
+                    method = "GET",
+                    parentRequest = request,
+                    headers = request.headers
+                )
+                requestRepository.save(subRequest)
+                startRecordingJob(item, subRequest, 0, null)
+                knownItems.add(item)
+            }
+        }}
     }
 
     fun stopRecording(uuid : String){

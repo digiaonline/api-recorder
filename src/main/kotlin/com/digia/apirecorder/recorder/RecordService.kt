@@ -126,15 +126,18 @@ class RecordService @Autowired constructor(val recordRepository: RecordRepositor
             log.info("Starting recording $url for record ${request.id}")
             val recordingBeginningTime = start?:Instant.now()
             delay(Duration.between(Instant.now(), recordingBeginningTime).toMillis())
-            if(request.period == 0){
-                delay(Random.nextInt(30) * 1000L)
+            val randomOffset = if (request.period != 0) request.period else 30
+            delay(Random.nextInt(randomOffset)* 1000L) //random offset so that all the recordings won't start at the same time
+            var dataRecorded = false //Let's make sure we record something at least once
+            while(!dataRecorded || recordingBeginningTime.plusMillis(recordingDuration * 1000L).isAfter(Instant.now())){
+                val frameBeginningTime = Instant.now()
                 try {
                     val requestTime = Instant.now()
                     val httpResponse = dataReader.read(url, request.headers, request.body, request.method)
                     val responseTime = Instant.now()
                     val response = dataWriter.write(
                         request,
-                        0,
+                        if (request.period != 0) Duration.between(recordingBeginningTime, frameBeginningTime).toMillis() / 1000L else 0,
                         httpResponse,
                         Duration.between(requestTime, responseTime).toMillis()
                     )
@@ -145,33 +148,11 @@ class RecordService @Autowired constructor(val recordRepository: RecordRepositor
                 catch(e : Exception){
                     log.warn("$url recording failed: ${e.message}")
                 }
+                val duration = Duration.between(frameBeginningTime, Instant.now())
+                delay(request.period * 1000 - duration.toMillis())
+                dataRecorded = true
             }
-            else{
-                delay(Random.nextInt(request.period) * 1000L) //random offset so that all the recordings won't start at the same time
-                while(recordingBeginningTime.plusMillis(recordingDuration * 1000L ).isAfter(Instant.now())){
-                    val frameBeginningTime = Instant.now()
-                    try {
-                        val requestTime = Instant.now()
-                        val httpResponse = dataReader.read(url, request.headers, request.body, request.method)
-                        val responseTime = Instant.now()
-                        val response = dataWriter.write(
-                            request,
-                            Duration.between(recordingBeginningTime, frameBeginningTime).toMillis() / 1000L,
-                            httpResponse,
-                            Duration.between(requestTime, responseTime).toMillis()
-                        )
-                        if(request.feedItemPath != null && response.type == ResponseType.NEW){
-                            createFeedItems(request, response, knownItems)
-                        }
-                    }
-                    catch(e : Exception){
-                        log.warn("$url recording failed: ${e.message}")
-                    }
-                    val duration = Duration.between(frameBeginningTime, Instant.now())
-                    delay(request.period * 1000 - duration.toMillis())
-                }
-            }
-            log.info("Finished recording for record ${request.id}")
+            log.info("Finished recording for request ${request.id}")
         }
     }
 
@@ -205,7 +186,7 @@ class RecordService @Autowired constructor(val recordRepository: RecordRepositor
     }
 
     fun listRecordings() : List<Record>{
-        return recordRepository.findAll();
+        return recordRepository.findAll()
     }
 
 }

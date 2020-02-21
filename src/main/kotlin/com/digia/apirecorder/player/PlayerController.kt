@@ -42,7 +42,7 @@ class PlayerController @Autowired constructor(val playerService : PlayerService)
     @PutMapping("/{uuid}/stop")
     fun stopPlay(@PathVariable("uuid") playUuid : String) : HttpEntity<*> {
         return try{
-            playerService.updateActivePlay(playUuid, 0, 0)
+            playerService.updatePlayer(playUuid, 0, 0)
             ResponseEntity("", HttpStatus.OK)
         }
         catch(e : Exception){
@@ -53,7 +53,7 @@ class PlayerController @Autowired constructor(val playerService : PlayerService)
     @PutMapping("/{uuid}/pause")
     fun pausePlay(@PathVariable("uuid") playUuid : String) : HttpEntity<*> {
         return try{
-            playerService.updateActivePlay(playUuid, 0)
+            playerService.updatePlayer(playUuid, 0)
             ResponseEntity("", HttpStatus.OK)
         }
         catch(e : Exception){
@@ -64,7 +64,7 @@ class PlayerController @Autowired constructor(val playerService : PlayerService)
     @PutMapping("/{uuid}/play")
     fun play(@PathVariable("uuid") playUuid : String) : HttpEntity<*> {
         return try {
-            playerService.updateActivePlay(playUuid, 1)
+            playerService.updatePlayer(playUuid, 1)
             ResponseEntity("", HttpStatus.OK)
         }
         catch(e : Exception){
@@ -75,7 +75,7 @@ class PlayerController @Autowired constructor(val playerService : PlayerService)
     @PutMapping("/{uuid}/speed/{speed}")
     fun speed(@PathVariable("uuid") playUuid : String, @PathVariable("speed") speed : Int) : HttpEntity<*> {
         return try {
-            playerService.updateActivePlay(playUuid, speed)
+            playerService.updatePlayer(playUuid, speed)
             ResponseEntity("", HttpStatus.OK)
         }
         catch(e : Exception){
@@ -86,7 +86,7 @@ class PlayerController @Autowired constructor(val playerService : PlayerService)
     @PutMapping("/{uuid}/offset/{offset}")
     fun offset(@PathVariable("uuid") playUuid : String, @PathVariable("offset") offset : Int) : HttpEntity<*> {
         return try {
-            playerService.updateActivePlay(playUuid, speed= null, offset= offset)
+            playerService.updatePlayer(playUuid, speed= null, offset= offset)
             ResponseEntity("", HttpStatus.OK)
         }
         catch(e : Exception){
@@ -97,10 +97,21 @@ class PlayerController @Autowired constructor(val playerService : PlayerService)
     @GetMapping("/list")
     fun listPlayers() : HttpEntity<*>{
         return try{
-            ResponseEntity(playerService.getActivePlays().values, HttpStatus.OK)
+            ResponseEntity(playerService.getPlayers().values, HttpStatus.OK)
         }
         catch(e : Exception){
             ResponseEntity(e.message, HttpStatus.INTERNAL_SERVER_ERROR)
+        }
+    }
+
+    @DeleteMapping("/{uuid}")
+    fun delete(@PathVariable("uuid") playerUuid : String) : HttpEntity<*>{
+        return try {
+            playerService.remove(playerUuid)
+            ResponseEntity("", HttpStatus.OK)
+        }
+        catch(e : Exception){
+            ResponseEntity(e.message, HttpStatus.BAD_REQUEST)
         }
     }
 }

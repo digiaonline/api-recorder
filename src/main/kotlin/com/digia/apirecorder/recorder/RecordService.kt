@@ -177,12 +177,16 @@ class RecordService @Autowired constructor(val recordRepository: RecordRepositor
     }
 
     fun stopRecording(uuid : String){
-        val recordSet = recordRepository.findByUuid(uuid)
-        if(recordSet != null){
+        val record = recordRepository.findByUuid(uuid)
+        if(record != null){
             activeRecordings[uuid]?.forEach{ job -> job.cancel()}
-            recordSet.end = LocalDateTime.now()
-            recordRepository.save(recordSet)
+            record.end = LocalDateTime.now()
+            recordRepository.save(record)
         }
+    }
+
+    fun delete(uuid : String){
+        throw Exception("Not implemented")
     }
 
     fun listRecordings() : List<Record>{

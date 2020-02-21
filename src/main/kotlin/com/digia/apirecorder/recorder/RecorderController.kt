@@ -53,13 +53,13 @@ class RecorderController @Autowired constructor(val recorderService : RecordServ
     }
 
     /**
-     * @param recordingId: the recording uuid to stop
+     * @param recordingUuid: the recording uuid to stop
      * @return OK
      */
-    @PostMapping("/stop/{recordingId}")
-    fun stopRecording(@PathVariable("recordingId") recordingId : String) : HttpEntity<*>{
-        recorderService.stopRecording(recordingId)
-        return ResponseEntity("Record $recordingId stopped", HttpStatus.OK)
+    @PutMapping("/{recordingId}/stop")
+    fun stopRecording(@PathVariable("recordingId") recordingUuid : String) : HttpEntity<*>{
+        recorderService.stopRecording(recordingUuid)
+        return ResponseEntity("Record $recordingUuid stopped", HttpStatus.OK)
     }
 
     /**
@@ -68,5 +68,18 @@ class RecorderController @Autowired constructor(val recorderService : RecordServ
     @GetMapping("/list")
     fun listRecorders() : HttpEntity<*>{
         return ResponseEntity(recorderService.listRecordings(), HttpStatus.OK)
+    }
+
+    @DeleteMapping("/{recordUuid}")
+    fun delete(@PathVariable("recordUuid") recordUuid : String) : HttpEntity<*>{
+        return try{
+            recorderService.stopRecording(recordUuid)
+            recorderService.delete(recordUuid)
+            ResponseEntity(recorderService.listRecordings(), HttpStatus.OK)
+        }
+        catch(e : Exception){
+            log.error("Error while starting the recorder", e)
+            ResponseEntity("something went wrong: ${e.message}", HttpStatus.INTERNAL_SERVER_ERROR)
+        }
     }
 }

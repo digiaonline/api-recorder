@@ -23,7 +23,7 @@ class WatchController @Autowired constructor(
 
     @RequestMapping("/watch/{uuid}/url/**")
     fun watch(@PathVariable("uuid") playUuid : String, @RequestBody body : String?, @RequestHeader headers : Map<String, String>?) : HttpEntity<*> {
-        val activePlay = playerService.getActivePlay(playUuid)
+        val activePlay = playerService.getPlayer(playUuid)
         return if(activePlay == null){
             ResponseEntity("Unknown player uuid", HttpStatus.BAD_REQUEST)
         }

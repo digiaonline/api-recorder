@@ -13,7 +13,7 @@ import java.util.*
 class PlayerService @Autowired constructor(val recordRepository : RecordRepository){
 
     private val log = KotlinLogging.logger {}
-    private val activePlays : MutableMap<String, Player> = mutableMapOf()
+    private val players : MutableMap<String, Player> = mutableMapOf()
     private val ticker : Job = GlobalScope.launch(Dispatchers.Default)
     {
         while(true) {
@@ -22,8 +22,8 @@ class PlayerService @Autowired constructor(val recordRepository : RecordReposito
         }
     }
 
-    fun getActivePlay(playUuid : String) : Player?{
-        return activePlays[playUuid]
+    fun getPlayer(playUuid : String) : Player?{
+        return players[playUuid]
     }
 
     fun create(createPlayerRequestDTO : CreatePlayerRequestDTO) :String?{
@@ -31,26 +31,26 @@ class PlayerService @Autowired constructor(val recordRepository : RecordReposito
             throw Exception("Unknown recordUuid")
         }
         val playUuid = createPlayerRequestDTO.playerUuid?: UUID.randomUUID().toString()
-        if(activePlays[playUuid] != null){
+        if(players[playUuid] != null){
             throw Exception("Player uuid already exists")
         }
-        activePlays[playUuid] = Player(playUuid, createPlayerRequestDTO.recordUuid, 0, 0)
+        players[playUuid] = Player(playUuid, createPlayerRequestDTO.recordUuid, 0, 0)
         return playUuid
     }
 
     fun remove(playUuid : String){
-        if(activePlays[playUuid] == null){
+        if(players[playUuid] == null){
             throw Exception("Unknown playUuid")
         }
-        activePlays.remove(playUuid)
+        players.remove(playUuid)
     }
 
-    fun getActivePlays() : Map<String, Player>{
-        return activePlays
+    fun getPlayers() : Map<String, Player>{
+        return players
     }
 
-    fun updateActivePlay(playUuid : String, speed : Int? = null, offset : Int? = null){
-        val activePlay = activePlays[playUuid]
+    fun updatePlayer(playUuid : String, speed : Int? = null, offset : Int? = null){
+        val activePlay = players[playUuid]
         if(activePlay != null){
             if(speed != null) activePlay.speed = speed
             if(offset != null) activePlay.currentOffset = offset
@@ -61,7 +61,7 @@ class PlayerService @Autowired constructor(val recordRepository : RecordReposito
     }
 
     private fun tick(){
-        activePlays.forEach{
+        players.forEach{
             activePlayEntry -> activePlayEntry.value.currentOffset += activePlayEntry.value.speed
         }
     }

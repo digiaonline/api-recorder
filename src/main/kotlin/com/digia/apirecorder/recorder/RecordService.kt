@@ -73,52 +73,59 @@ class RecordService @Autowired constructor(val recordRepository: RecordRepositor
             if(startRecordingSetRequest.globalParameters != null) urls = injectParameters(urls, startRecordingSetRequest.globalParameters)
             //Creating jobs based on the urls
             for(url in urls){
-                val request = Request(
-                    null,
-                    record,
-                    urlToRecord.period,
-                    url.substringAfter("://"),
-                    urlToRecord.method,
-                    urlToRecord.headers,
-                    urlToRecord.body,
-                    null,
-                    null
-                )
-                requestRepository.save(request)
-                val job = startRecordingJob(url, request, startRecordingSetRequest.duration, if(startRecordingSetRequest.start != null) Instant.parse(startRecordingSetRequest.start) else null)
-                activeRecordings[uuid]!!.add(job)
+                var bodies = listOf<String?>(urlToRecord.body)
+                if(urlToRecord.body != null){
+                    if(urlToRecord.parameters != null) bodies = injectParameters( bodies as List<String>, urlToRecord.parameters)
+                    if(startRecordingSetRequest.globalParameters != null) bodies = injectParameters(bodies as List<String>, startRecordingSetRequest.globalParameters)
+                }
+                for(body in bodies){
+                    val request = Request(
+                        null,
+                        record,
+                        urlToRecord.period,
+                        url.substringAfter("://"),
+                        urlToRecord.method,
+                        urlToRecord.headers,
+                        body,
+                        null,
+                        null
+                    )
+                    requestRepository.save(request)
+                    val job = startRecordingJob(url, request, startRecordingSetRequest.duration, if(startRecordingSetRequest.start != null) Instant.parse(startRecordingSetRequest.start) else null)
+                    activeRecordings[uuid]!!.add(job)
+                }
             }
         }
         return uuid
     }
 
-    private fun injectParameters(urls : List<String>, parameters : Array<ParametersDTO>) : List<String>{
-        var sourceUrlList = mutableListOf<String>()
-        sourceUrlList.addAll(urls)
+    private fun injectParameters(targetStrings : List<String>, parameters : Array<ParametersDTO>) : List<String>{
+        var sourceUrlTargetStringsList = mutableListOf<String>()
+        sourceUrlTargetStringsList.addAll(targetStrings)
         for(parameter in parameters){
             val resultUrlList = mutableListOf<String>()
-            for(urlToUpdate in sourceUrlList){
-                if(urlToUpdate.contains(parameter.name)){
+            for(stringToUpdate in sourceUrlTargetStringsList){
+                if(stringToUpdate.contains(parameter.name)){
                     for(parameterValue in parameter.values){
                         if(!parameterValue.contains("...")){
-                            resultUrlList.add(urlToUpdate.replace(parameter.name, parameterValue))
+                            resultUrlList.add(stringToUpdate.replace(parameter.name, parameterValue))
                         }
                         else{
                             val firstValue = Integer.parseInt(parameterValue.substringBefore("..."))
                             val lastValue = Integer.parseInt(parameterValue.substringAfter("..."))
                             for(i in firstValue .. lastValue){
-                                resultUrlList.add(urlToUpdate.replace(parameter.name, i.toString()))
+                                resultUrlList.add(stringToUpdate.replace(parameter.name, i.toString()))
                             }
                         }
                     }
                 }
                 else{
-                    resultUrlList.add(urlToUpdate)
+                    resultUrlList.add(stringToUpdate)
                 }
             }
-            sourceUrlList = resultUrlList
+            sourceUrlTargetStringsList = resultUrlList
         }
-        return sourceUrlList
+        return sourceUrlTargetStringsList
     }
 
     private fun startRecordingJob(url : String, request : Request, recordingDuration : Long, start : Instant?, knownItems : MutableSet<String> = mutableSetOf()) : Job{

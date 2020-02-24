@@ -10,10 +10,10 @@ import javax.persistence.AttributeConverter
 
 
 @Converter
-class MapToStringConverter : AttributeConverter<Map<String, List<String>>, String> {
+class MapToStringConverter : AttributeConverter<Map<String, String>, String> {
     private var mapper = ObjectMapper()
 
-    override fun convertToDatabaseColumn(data: Map<String, List<String>>?): String {
+    override fun convertToDatabaseColumn(data: Map<String, String>?): String {
         var value = ""
         if(data == null || data.isEmpty()){
             return value
@@ -27,14 +27,14 @@ class MapToStringConverter : AttributeConverter<Map<String, List<String>>, Strin
         return value
     }
 
-    override fun convertToEntityAttribute(data: String?): Map<String, List<String>>? {
+    override fun convertToEntityAttribute(data: String?): Map<String, String>? {
         if(data == null || data.isEmpty()) return null
-        var mapValue: Map<String, List<String>> = HashMap()
-        val typeRef = object : TypeReference<HashMap<String, List<String>>>() {
+        var mapValue: Map<String, String> = HashMap()
+        val typeRef = object : TypeReference<HashMap<String, String>>() {
 
         }
         try {
-            mapValue = mapper.readValue<Map<String, List<String>>>(data, typeRef)
+            mapValue = mapper.readValue<Map<String, String>>(data, typeRef)
         } catch (e: IOException) {
             e.printStackTrace()
         }

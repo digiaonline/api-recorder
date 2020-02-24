@@ -1,5 +1,6 @@
 package com.digia.apirecorder.recorder.persistence
 
+import com.fasterxml.jackson.annotation.JsonFormat
 import javax.persistence.*
 
 @Entity

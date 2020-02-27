@@ -32,8 +32,9 @@ function buildRecordList(data, status){
 }
 
 function displayDefinition(i){
+    //This doesn't work to display xml
     var newWindow = window.open("");
-    newWindow.document.write(records[i].definition);
+    newWindow.document.write( records[i].definition);
 }
 
 function createPlayer(recordUuid){
@@ -60,7 +61,8 @@ function buildPlayerList(data, status){
     var newHtml = "<table id='playerTable'><tr><th>Player uuid</th><th>Prefix</th><th>Record uuid</th><th>Speed</th><th>Current offset</th><th></th></tr>";
     for(var i = 0 ; i < data.length ; i++){
         var playerItem = data[i];
-        newHtml += "<tr><td>" + playerItem.playUuid + "</td><td>" +  window.location.hostname + "/watch/" + playerItem.playUuid + "/url/</td><td>" + playerItem.recordUuid + "</td><td>" + playerItem.speed + "</td><td>" + playerItem.currentOffset + "</td><td><button id='jumpToOffset' onclick=\"jumpToOffset('" + playerItem.playUuid + "')\">Jump to offset</button><button id='stop' onclick=\"stop('" + playerItem.playUuid + "')\">Stop</button><button id='playpause' onclick=\"playPause('" + playerItem.playUuid + "', " + playerItem.speed + ")\">Play/Pause</button><button id='speedup' onclick=\"changeSpeed('" + playerItem.playUuid + "', " + playerItem.speed + ", +1)\">Speed up</button><button id='speeddown' onclick=\"changeSpeed('" + playerItem.playUuid + "', " + playerItem.speed + ", -1)\">Speed down</button><button id='deletePlayer' onclick=\"deletePlayer('" + playerItem.playUuid + "')\">Delete</button></tr>";
+        var prefix = window.location.hostname + "/watch/" + playerItem.playUuid + "/url/";
+        newHtml += "<tr><td>" + playerItem.playUuid + "<button onclick='copy(\"" +  playerItem.playUuid + "\")'>Copy</td><td>" +  prefix + "<button onclick='copy(\"" +  prefix + "\")'>Copy</button></td><td>" + playerItem.recordUuid + "</td><td>" + playerItem.speed + "</td><td>" + playerItem.currentOffset + "</td><td><button id='jumpToOffset' onclick=\"jumpToOffset('" + playerItem.playUuid + "')\">Jump to offset</button><button id='stop' onclick=\"stop('" + playerItem.playUuid + "')\">Stop</button><button id='playpause' onclick=\"playPause('" + playerItem.playUuid + "', " + playerItem.speed + ")\">Play/Pause</button><button id='speedup' onclick=\"changeSpeed('" + playerItem.playUuid + "', " + playerItem.speed + ", +1)\">Speed up</button><button id='speeddown' onclick=\"changeSpeed('" + playerItem.playUuid + "', " + playerItem.speed + ", -1)\">Speed down</button><button id='deletePlayer' onclick=\"deletePlayer('" + playerItem.playUuid + "')\">Delete</button></tr>";
     }
     newHtml += "</table>";
     $("#content").html(newHtml);
@@ -135,4 +137,8 @@ function stopRecord(recordUuid){
             url: '/api/record/' + recordUuid + '/stop'
         }).done(function (data){listRecordings();});
     }
+}
+
+function copy(text){
+    navigator.clipboard.writeText(text);
 }

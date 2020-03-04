@@ -15,7 +15,7 @@ data class Request(
     val url : String,
     val method : String,
     @Convert(converter = MapToStringConverter::class)
-    val headers : Map<String, String>? = null,
+    val headers : Map<String, List<String>>? = null,
     val body : String? = null,
     @Column(name = "feed_item_path")
     val feedItemPath : String? = null,

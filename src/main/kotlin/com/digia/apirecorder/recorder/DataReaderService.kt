@@ -18,11 +18,11 @@ class DataReaderService {
     private val okHttpClient = OkHttpClient()
     private val log = KotlinLogging.logger {}
 
-    fun read(url : String, headers : Map<String,String>?, body : String?, method : String) : Response {
+    fun read(url : String, headers : Map<String,List<String>>?, body : String?, method : String) : Response {
         log.info("Reading data from $url")
         val requestBuilder = Request.Builder().url(url)
         headers?.entries?.forEach { entry ->
-                requestBuilder.addHeader(entry.key, entry.value)
+            entry.value.forEach{value ->  requestBuilder.addHeader(entry.key, value)}
         }
         requestBuilder.method(method, body?.toRequestBody())
         return okHttpClient.newCall(requestBuilder.build()).execute()

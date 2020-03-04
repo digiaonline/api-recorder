@@ -7,23 +7,23 @@ import javax.persistence.*
 data class Response(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id : Int?,
+    val id: Int?,
     @Column(name = "custom_body")
-    val customBody : String?,
+    val customBody: String?,
     @ManyToOne
     @JoinColumn(name= "request_id", nullable = false)
-    val request : Request,
+    val request: Request,
     val timestamp: LocalDateTime,
     @Column(name = "time_offset", nullable = false)
-    val timeOffset : Int,
+    val timeOffset: Int,
     @Enumerated(EnumType.STRING)
     val type: ResponseType,
     @Column(name = "response_code", nullable = false)
-    val responseCode : Int,
+    val responseCode: Int,
     @Column(name = "response_time", nullable = false)
-    val responseTime : Long,
+    val responseTime: Long,
     @Convert(converter = MapToStringConverter::class)
-    val headers :  Map<String, List<String>>?,
+    val headers: Map<String, List<String>>,
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name= "response_body_id", nullable = true)
     val responseBody:  ResponseBody

@@ -7,7 +7,7 @@ data class StartSingleRecordRequestDTO(
     val start : String?,
     val name : String?,
     val method : String = "GET",
-    val headers : Map<String, String>?,
+    val headers : Map<String, List<String>>?,
     val body : String?,
     val feedItemPath : String?
 )

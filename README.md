@@ -5,5 +5,6 @@ wiki page for instructions.
 
 The typical usage is to:
 - record a set of urls
-- prepare a test version of the app, replacing the url of the server by the url of the player in the recorder
+- prepare a test version of the app, replacing the url of the server by the url of the player in the recorder. Alternatively you can use a proxy to redirect the traffic.
 - use the player controls and see the result on the test app
+

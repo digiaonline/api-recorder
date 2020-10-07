@@ -73,6 +73,7 @@ class RecordService @Autowired constructor(val recordRepository: RecordRepositor
             if(startRecordingSetRequest.globalParameters != null) urls = injectParameters(urls, startRecordingSetRequest.globalParameters)
             //Creating jobs based on the urls
             for(url in urls){
+                //Even with the body is null, bodies will contain one null element
                 var bodies = listOf<String?>(urlToRecord.body)
                 if(urlToRecord.body != null){
                     if(urlToRecord.parameters != null) bodies = injectParameters( bodies as List<String>, urlToRecord.parameters)
@@ -135,8 +136,8 @@ class RecordService @Autowired constructor(val recordRepository: RecordRepositor
             delay(Duration.between(Instant.now(), recordingBeginningTime).toMillis())
             val randomOffset = if (request.period != 0) request.period else 30
             delay(Random.nextInt(randomOffset)* 1000L) //random offset so that all the recordings won't start at the same time
-            var dataRecorded = false //Let's make sure we record something at least once
-            while(!dataRecorded || recordingBeginningTime.plusMillis(recordingDuration * 1000L).isAfter(Instant.now())){
+            var stopRecording = false
+            while(!(stopRecording || recordingBeginningTime.plusMillis(recordingDuration * 1000L).isAfter(Instant.now()))){
                 val frameBeginningTime = Instant.now()
                 try {
                     val requestTime = Instant.now()
@@ -156,8 +157,8 @@ class RecordService @Autowired constructor(val recordRepository: RecordRepositor
                     log.warn("$url recording failed: ${e.message}")
                 }
                 val duration = Duration.between(frameBeginningTime, Instant.now())
-                delay(request.period * 1000 - duration.toMillis())
-                dataRecorded = true
+                delay(request.period  * 1000 - duration.toMillis())
+                stopRecording = (request.period == 0) //Record single value if period is 0
             }
             log.info("Finished recording for request ${request.id}")
         }

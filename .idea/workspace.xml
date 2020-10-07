@@ -1,0 +1,572 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="9c7799f2-4a86-45f9-af68-95cb1f50c63d" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CompilerWorkspaceConfiguration">
+    <option name="MAKE_PROJECT_ON_SAVE" value="true" />
+  </component>
+  <component name="CoverageViewManager">
+    <option name="myElementSize" value="268" />
+  </component>
+  <component name="DefaultGradleProjectSettings">
+    <option name="testRunner" value="GRADLE" />
+    <option name="delegatedBuild" value="true" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="apirecorder" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="apirecorder" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="apirecorder" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="Kotlin Object" />
+        <option value="Kotlin File" />
+        <option value="Kotlin Interface" />
+        <option value="Kotlin Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="feeds" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="jdkForImporter" value="1.8" />
+        <option name="vmOptionsForImporter" value="-Xmx768m" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="1RQ5V9wdigYZq0dQ7AjACwmfHcv" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="LombokPluginEnabledInProject" value="false" />
+    <property name="LombokPluginIS_ANNOTATION_PROCESSING_CHECK_Enabled" value="false" />
+    <property name="LombokPluginIS_BUILDER_Enabled" value="false" />
+    <property name="LombokPluginIS_CONSTRUCTOR_Enabled" value="true" />
+    <property name="LombokPluginIS_DELEGATE_Enabled" value="false" />
+    <property name="LombokPluginIS_LOG_Enabled" value="true" />
+    <property name="LombokPluginIS_LOMBOK_VERSION_CHECK_Enabled" value="false" />
+    <property name="LombokPluginIS_MISSING_LOMBOK_CHECK_Enabled" value="false" />
+    <property name="LombokPluginIS_VAL_Enabled" value="false" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../enunciate-sample-master" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="settings.editor.selected.configurable" value="project.propCompiler" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\dev\backend\apirecorder\src\main\resources" />
+      <recent name="C:\dev\backend\apirecorder\src\main\resources\static\js" />
+      <recent name="C:\dev\backend\apirecorder\src\main\resources\templates" />
+      <recent name="C:\dev\backend\apirecorder\src\main\kotlin\com\digia\apirecorder\recorder\dto" />
+      <recent name="C:\dev\backend\apirecorder\src\main\kotlin\com\digia\apirecorder\collection" />
+    </key>
+    <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="network" />
+    </key>
+    <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="com.digia.apirecorder.watcher" />
+      <recent name="com.digia.apirecorder.recorder.dto" />
+      <recent name="com.digia.apirecorder" />
+      <recent name="com.digia.apirecorder.collection" />
+      <recent name="com.digia.apirecorder.recorder" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\dev\backend\apirecorder\src\main\kotlin\utils" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Gradle.apirecorder [bootJar]">
+    <configuration name="DbTest.testPersistence" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="--tests &quot;com.digia.apirecorder.DbTest.testPersistence&quot;" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":cleanTest" />
+            <option value=":test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>false</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="apirecorder [bootJar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="bootJar" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="apirecorder [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="apirecorder [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="clean" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="com.digia.apirecorder.RecorderApplicationKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <module name="apirecorder.main" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" value="com.digia.apirecorder.RecorderApplicationKt" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <envs>
+        <env name="SPRING_PROFILES_ACTIVE" value="dev" />
+      </envs>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Gradle.apirecorder [bootJar]" />
+      <item itemvalue="Gradle.apirecorder [build]" />
+      <item itemvalue="Gradle.apirecorder [clean]" />
+      <item itemvalue="Gradle.DbTest.testPersistence" />
+      <item itemvalue="Kotlin.com.digia.apirecorder.RecorderApplicationKt" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Kotlin.com.digia.apirecorder.RecorderApplicationKt" />
+        <item itemvalue="Gradle.apirecorder [bootJar]" />
+        <item itemvalue="Gradle.apirecorder [clean]" />
+        <item itemvalue="Gradle.DbTest.testPersistence" />
+        <item itemvalue="Gradle.apirecorder [build]" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9c7799f2-4a86-45f9-af68-95cb1f50c63d" name="Default Changelist" comment="" />
+      <created>1569503514148</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1569503514148</updated>
+    </task>
+    <task id="LOCAL−00001" summary="Added player and watcher, untested">
+      <created>1572508886256</created>
+      <option name="number" value="LOCAL−00001" />
+      <option name="presentableId" value="LOCAL−00001" />
+      <updated>1572508886256</updated>
+    </task>
+    <task id="LOCAL−00002" summary="Player and watcher now working">
+      <created>1573126133346</created>
+      <option name="number" value="LOCAL−00002" />
+      <option name="presentableId" value="LOCAL−00002" />
+      <updated>1573126133346</updated>
+    </task>
+    <task id="LOCAL−00003" summary="Minor features">
+      <created>1573131989221</created>
+      <option name="number" value="LOCAL−00003" />
+      <option name="presentableId" value="LOCAL−00003" />
+      <updated>1573131989221</updated>
+    </task>
+    <task id="LOCAL−00004" summary="Random offset before starting a recording">
+      <created>1573201835025</created>
+      <option name="number" value="LOCAL−00004" />
+      <option name="presentableId" value="LOCAL−00004" />
+      <updated>1573201835025</updated>
+    </task>
+    <task id="LOCAL−00005" summary="Delayed recording">
+      <created>1573202480879</created>
+      <option name="number" value="LOCAL−00005" />
+      <option name="presentableId" value="LOCAL−00005" />
+      <updated>1573202480879</updated>
+    </task>
+    <task id="LOCAL−00006" summary="Added name and definition to record">
+      <created>1573730406759</created>
+      <option name="number" value="LOCAL−00006" />
+      <option name="presentableId" value="LOCAL−00006" />
+      <updated>1573730406759</updated>
+    </task>
+    <task id="LOCAL−00007" summary="Added recording and player lists">
+      <created>1574153920603</created>
+      <option name="number" value="LOCAL−00007" />
+      <option name="presentableId" value="LOCAL−00007" />
+      <updated>1574153920603</updated>
+    </task>
+    <task id="LOCAL−00008" summary="Added swagger">
+      <created>1574154941930</created>
+      <option name="number" value="LOCAL−00008" />
+      <option name="presentableId" value="LOCAL−00008" />
+      <updated>1574154941930</updated>
+    </task>
+    <task id="LOCAL−00009" summary="Added response type, code and time">
+      <created>1574168652264</created>
+      <option name="number" value="LOCAL−00009" />
+      <option name="presentableId" value="LOCAL−00009" />
+      <updated>1574168652264</updated>
+    </task>
+    <task id="LOCAL−00010" summary="Updated database conf">
+      <created>1574172592323</created>
+      <option name="number" value="LOCAL−00010" />
+      <option name="presentableId" value="LOCAL−00010" />
+      <updated>1574172592323</updated>
+    </task>
+    <task id="LOCAL−00011" summary="Fixig bug for programming recordings">
+      <created>1574436072045</created>
+      <option name="number" value="LOCAL−00011" />
+      <option name="presentableId" value="LOCAL−00011" />
+      <updated>1574436072045</updated>
+    </task>
+    <task id="LOCAL−00012" summary="Added minimal UI">
+      <created>1574945829994</created>
+      <option name="number" value="LOCAL−00012" />
+      <option name="presentableId" value="LOCAL−00012" />
+      <updated>1574945829994</updated>
+    </task>
+    <task id="LOCAL−00013" summary="Support for WSDL and other methods than GET">
+      <created>1575288473986</created>
+      <option name="number" value="LOCAL−00013" />
+      <option name="presentableId" value="LOCAL−00013" />
+      <updated>1575288473986</updated>
+    </task>
+    <task id="LOCAL−00014" summary="Returning the headers and storing them in multimap">
+      <created>1575539155020</created>
+      <option name="number" value="LOCAL−00014" />
+      <option name="presentableId" value="LOCAL−00014" />
+      <updated>1575539155020</updated>
+    </task>
+    <task id="LOCAL−00015" summary="global recording parameters and separate table to store the response body in order to save some space">
+      <created>1578409198054</created>
+      <option name="number" value="LOCAL−00015" />
+      <option name="presentableId" value="LOCAL−00015" />
+      <updated>1578409198054</updated>
+    </task>
+    <task id="LOCAL−00016" summary="updated migrations file">
+      <created>1578484581482</created>
+      <option name="number" value="LOCAL−00016" />
+      <option name="presentableId" value="LOCAL−00016" />
+      <updated>1578484581482</updated>
+    </task>
+    <task id="LOCAL−00017" summary="cleaning imports">
+      <created>1578504091944</created>
+      <option name="number" value="LOCAL−00017" />
+      <option name="presentableId" value="LOCAL−00017" />
+      <updated>1578504091945</updated>
+    </task>
+    <task id="LOCAL−00018" summary="Removing property files">
+      <created>1580125334637</created>
+      <option name="number" value="LOCAL−00018" />
+      <option name="presentableId" value="LOCAL−00018" />
+      <updated>1580125334637</updated>
+    </task>
+    <task id="LOCAL−00019" summary="Removing property files">
+      <created>1580125840478</created>
+      <option name="number" value="LOCAL−00019" />
+      <option name="presentableId" value="LOCAL−00019" />
+      <updated>1580125840478</updated>
+    </task>
+    <task id="LOCAL−00020" summary="Feeds">
+      <created>1581064574508</created>
+      <option name="number" value="LOCAL−00020" />
+      <option name="presentableId" value="LOCAL−00020" />
+      <updated>1581064574508</updated>
+    </task>
+    <task id="LOCAL−00021" summary="Possibility to choose the player uuid">
+      <created>1581950454247</created>
+      <option name="number" value="LOCAL−00021" />
+      <option name="presentableId" value="LOCAL−00021" />
+      <updated>1581950454247</updated>
+    </task>
+    <task id="LOCAL−00022" summary="Possibility to choose the player uuid">
+      <created>1582026161779</created>
+      <option name="number" value="LOCAL−00022" />
+      <option name="presentableId" value="LOCAL−00022" />
+      <updated>1582026161779</updated>
+    </task>
+    <task id="LOCAL−00023" summary="Possibility to choose the player uuid">
+      <created>1582278827564</created>
+      <option name="number" value="LOCAL−00023" />
+      <option name="presentableId" value="LOCAL−00023" />
+      <updated>1582278827564</updated>
+    </task>
+    <task id="LOCAL−00024" summary="Possibility to record feed items (in json)">
+      <created>1582289419166</created>
+      <option name="number" value="LOCAL−00024" />
+      <option name="presentableId" value="LOCAL−00024" />
+      <updated>1582289419166</updated>
+    </task>
+    <task id="LOCAL−00025" summary="Some refactoring">
+      <created>1582291830711</created>
+      <option name="number" value="LOCAL−00025" />
+      <option name="presentableId" value="LOCAL−00025" />
+      <updated>1582291830711</updated>
+    </task>
+    <task id="LOCAL−00026" summary="Improving the UI">
+      <created>1582294969131</created>
+      <option name="number" value="LOCAL−00026" />
+      <option name="presentableId" value="LOCAL−00026" />
+      <updated>1582294969131</updated>
+    </task>
+    <task id="LOCAL−00027" summary="Replacing Lists for headers by strings, injecting parameters in request body">
+      <created>1582555706655</created>
+      <option name="number" value="LOCAL−00027" />
+      <option name="presentableId" value="LOCAL−00027" />
+      <updated>1582555706655</updated>
+    </task>
+    <task id="LOCAL−00028" summary="Added copy prefix function">
+      <created>1582805516197</created>
+      <option name="number" value="LOCAL−00028" />
+      <option name="presentableId" value="LOCAL−00028" />
+      <updated>1582805516197</updated>
+    </task>
+    <task id="LOCAL−00029" summary="Readding support for multiple headers with the same name">
+      <created>1583326306215</created>
+      <option name="number" value="LOCAL−00029" />
+      <option name="presentableId" value="LOCAL−00029" />
+      <updated>1583326306215</updated>
+    </task>
+    <task id="LOCAL−00030" summary="Fixed bug for records with period = 0">
+      <created>1602064993291</created>
+      <option name="number" value="LOCAL−00030" />
+      <option name="presentableId" value="LOCAL−00030" />
+      <updated>1602064993291</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Minor features" />
+    <MESSAGE value="Random offset before starting a recording" />
+    <MESSAGE value="Delayed recording" />
+    <MESSAGE value="Added name and definition to record" />
+    <MESSAGE value="Added recording and player lists" />
+    <MESSAGE value="Added swagger" />
+    <MESSAGE value="Added response type, code and time" />
+    <MESSAGE value="Updated database conf" />
+    <MESSAGE value="Fixig bug for programming recordings" />
+    <MESSAGE value="Added minimal UI" />
+    <MESSAGE value="Support for WSDL and other methods than GET" />
+    <MESSAGE value="Returning the headers and storing them in multimap" />
+    <MESSAGE value="global recording parameters and separate table to store the response body in order to save some space" />
+    <MESSAGE value="updated migrations file" />
+    <MESSAGE value="cleaning imports" />
+    <MESSAGE value="Removing property files" />
+    <MESSAGE value="Feeds" />
+    <MESSAGE value="Possibility to choose the player uuid" />
+    <MESSAGE value="Possibility to record feed items (in json)" />
+    <MESSAGE value="Some refactoring" />
+    <MESSAGE value="Improving the UI" />
+    <MESSAGE value="Replacing Lists for headers by strings, injecting parameters in request body" />
+    <MESSAGE value="Added copy prefix function" />
+    <MESSAGE value="Readding support for multiple headers with the same name" />
+    <MESSAGE value="Fixed bug for records with period = 0" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed bug for records with period = 0" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="576" y="88" key="CommitChangelistDialog2" timestamp="1602064992264">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="576" y="88" key="CommitChangelistDialog2/0.0.1920.1040/-1920.0.1536.824@0.0.1920.1040" timestamp="1602064992264" />
+    <state width="408" height="466" key="DebuggerActiveHint" timestamp="1602058276169">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="408" height="466" key="DebuggerActiveHint/0.0.1920.1040/-1920.0.1536.824@0.0.1920.1040" timestamp="1602058276169" />
+    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog" timestamp="1602065567746">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog/0.0.1920.1040/-1920.0.1536.824@0.0.1920.1040" timestamp="1602065567746" />
+    <state width="1455" height="380" key="GridCell.Tab.0.bottom" timestamp="1602065133890">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1344" height="365" key="GridCell.Tab.0.bottom/-1920.0.1920.1040/-3840.0.1536.824/0.0.1920.1040@0.0.1920.1040" timestamp="1601654216422" />
+    <state width="1455" height="380" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.0.1536.824@0.0.1920.1040" timestamp="1602065133890" />
+    <state width="1455" height="380" key="GridCell.Tab.0.center" timestamp="1602065133890">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1344" height="365" key="GridCell.Tab.0.center/-1920.0.1920.1040/-3840.0.1536.824/0.0.1920.1040@0.0.1920.1040" timestamp="1601654216422" />
+    <state width="1455" height="380" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.0.1536.824@0.0.1920.1040" timestamp="1602065133890" />
+    <state width="1455" height="380" key="GridCell.Tab.0.left" timestamp="1602065133890">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1344" height="365" key="GridCell.Tab.0.left/-1920.0.1920.1040/-3840.0.1536.824/0.0.1920.1040@0.0.1920.1040" timestamp="1601654216422" />
+    <state width="1455" height="380" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.0.1536.824@0.0.1920.1040" timestamp="1602065133890" />
+    <state width="1455" height="380" key="GridCell.Tab.0.right" timestamp="1602065133890">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1344" height="365" key="GridCell.Tab.0.right/-1920.0.1920.1040/-3840.0.1536.824/0.0.1920.1040@0.0.1920.1040" timestamp="1601654216422" />
+    <state width="1455" height="380" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.0.1536.824@0.0.1920.1040" timestamp="1602065133890" />
+    <state width="1343" height="288" key="GridCell.Tab.1.bottom" timestamp="1602059079359">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1344" height="365" key="GridCell.Tab.1.bottom/-1920.0.1920.1040/-3840.0.1536.824/0.0.1920.1040@0.0.1920.1040" timestamp="1601654216290" />
+    <state width="1343" height="288" key="GridCell.Tab.1.bottom/0.0.1920.1040/-1920.0.1536.824@0.0.1920.1040" timestamp="1602059079359" />
+    <state width="1343" height="288" key="GridCell.Tab.1.center" timestamp="1602059079358">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1344" height="365" key="GridCell.Tab.1.center/-1920.0.1920.1040/-3840.0.1536.824/0.0.1920.1040@0.0.1920.1040" timestamp="1601654216290" />
+    <state width="1343" height="288" key="GridCell.Tab.1.center/0.0.1920.1040/-1920.0.1536.824@0.0.1920.1040" timestamp="1602059079358" />
+    <state width="1343" height="288" key="GridCell.Tab.1.left" timestamp="1602059079358">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1344" height="365" key="GridCell.Tab.1.left/-1920.0.1920.1040/-3840.0.1536.824/0.0.1920.1040@0.0.1920.1040" timestamp="1601654216290" />
+    <state width="1343" height="288" key="GridCell.Tab.1.left/0.0.1920.1040/-1920.0.1536.824@0.0.1920.1040" timestamp="1602059079358" />
+    <state width="1343" height="288" key="GridCell.Tab.1.right" timestamp="1602059079358">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1344" height="365" key="GridCell.Tab.1.right/-1920.0.1920.1040/-3840.0.1536.824/0.0.1920.1040@0.0.1920.1040" timestamp="1601654216290" />
+    <state width="1343" height="288" key="GridCell.Tab.1.right/0.0.1920.1040/-1920.0.1536.824@0.0.1920.1040" timestamp="1602059079358" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1602065220838">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1920.0.1536.824@0.0.1920.1040" timestamp="1602065220838" />
+    <state x="564" y="349" key="git4idea.merge.GitPullDialog" timestamp="1596106490562">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="564" y="349" key="git4idea.merge.GitPullDialog/-1920.0.1920.1040/-3840.0.1536.824/0.0.1920.1040@0.0.1920.1040" timestamp="1596106490562" />
+    <state x="774" y="414" key="git4idea.ui.GitResetDialog" timestamp="1602065558024">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="774" y="414" key="git4idea.ui.GitResetDialog/0.0.1920.1040/-1920.0.1536.824@0.0.1920.1040" timestamp="1602065558024" />
+    <state x="406" y="402" key="new project wizard" timestamp="1596106382903">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="406" y="402" key="new project wizard/-1920.0.1920.1040/-3840.0.1536.824/0.0.1920.1040@0.0.1920.1040" timestamp="1596106382903" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/src/main/kotlin/com/digia/apirecorder/collection/RecordingCollectionManager.kt</url>
+          <line>36</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/apirecorder$TestTest.ic" NAME="TestTest Coverage Results" MODIFIED="1572275793145" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
+</project>

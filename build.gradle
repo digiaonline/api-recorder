@@ -67,7 +67,7 @@ dependencies {
     //DB
     implementation "org.springframework.boot:spring-boot-starter-data-jpa"
     implementation "org.liquibase:liquibase-core"
-    runtimeOnly 'mysql:mysql-connector-java'
+    runtime 'mysql:mysql-connector-java'
 
     implementation "io.github.microutils:kotlin-logging:1.6.22"
 

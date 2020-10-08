@@ -137,7 +137,7 @@ class RecordService @Autowired constructor(val recordRepository: RecordRepositor
             val randomOffset = if (request.period != 0) request.period else 30
             delay(Random.nextInt(randomOffset)* 1000L) //random offset so that all the recordings won't start at the same time
             var stopRecording = false
-            while(!(stopRecording || recordingBeginningTime.plusMillis(recordingDuration * 1000L).isAfter(Instant.now()))){
+            while(!stopRecording && recordingBeginningTime.plusMillis(recordingDuration * 1000L).isAfter(Instant.now())){
                 val frameBeginningTime = Instant.now()
                 try {
                     val requestTime = Instant.now()

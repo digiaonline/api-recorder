@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="9c7799f2-4a86-45f9-af68-95cb1f50c63d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/migrations/007-add-feed-item-url-template.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/migrations/008-enlarge-header-columns.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/apirecorder.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/apirecorder.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/digia/apirecorder/recorder/RecordService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/digia/apirecorder/recorder/RecordService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/digia/apirecorder/recorder/dto/StartRecordingSetRequestDTO.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/digia/apirecorder/recorder/dto/StartRecordingSetRequestDTO.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/digia/apirecorder/recorder/dto/StartSingleRecordRequestDTO.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/digia/apirecorder/recorder/dto/StartSingleRecordRequestDTO.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/digia/apirecorder/recorder/persistence/Request.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/digia/apirecorder/recorder/persistence/Request.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/migrations.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/migrations.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,17 +48,6 @@
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="apirecorder" type="f1a62948:ProjectNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="apirecorder" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="apirecorder" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="build" type="c8890929:TasksNode$1" />
               </path>
             </expand>
             <select />
@@ -102,7 +101,7 @@
     <property name="LombokPluginIS_MISSING_LOMBOK_CHECK_Enabled" value="false" />
     <property name="LombokPluginIS_VAL_Enabled" value="false" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../enunciate-sample-master" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../transitdata/testpostgre" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -130,7 +129,7 @@
       <recent name="C:\dev\backend\apirecorder\src\main\kotlin\utils" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.apirecorder [bootJar]">
+  <component name="RunManager" selected="Application.com.digia.apirecorder.RecorderApplicationKt">
     <configuration name="DbTest.testPersistence" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -148,7 +147,9 @@
         </option>
         <option name="vmOptions" />
       </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>false</GradleScriptDebugEnabled>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
     <configuration name="apirecorder [bootJar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -167,7 +168,9 @@
         </option>
         <option name="vmOptions" />
       </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
     <configuration name="apirecorder [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -186,7 +189,9 @@
         </option>
         <option name="vmOptions" />
       </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
     <configuration name="apirecorder [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -205,7 +210,9 @@
         </option>
         <option name="vmOptions" />
       </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
     <configuration name="com.digia.apirecorder.RecorderApplicationKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
@@ -229,11 +236,11 @@
       <item itemvalue="Gradle.apirecorder [build]" />
       <item itemvalue="Gradle.apirecorder [clean]" />
       <item itemvalue="Gradle.DbTest.testPersistence" />
-      <item itemvalue="Kotlin.com.digia.apirecorder.RecorderApplicationKt" />
+      <item itemvalue="Application.com.digia.apirecorder.RecorderApplicationKt" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Kotlin.com.digia.apirecorder.RecorderApplicationKt" />
+        <item itemvalue="Application.com.digia.apirecorder.RecorderApplicationKt" />
         <item itemvalue="Gradle.apirecorder [bootJar]" />
         <item itemvalue="Gradle.apirecorder [clean]" />
         <item itemvalue="Gradle.DbTest.testPersistence" />
@@ -241,6 +248,7 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -432,16 +440,34 @@
       <option name="presentableId" value="LOCAL−00030" />
       <updated>1602064993291</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL−00031" summary="IntelliJ stuff">
+      <created>1602065653940</created>
+      <option name="number" value="LOCAL−00031" />
+      <option name="presentableId" value="LOCAL−00031" />
+      <updated>1602065653940</updated>
+    </task>
+    <task id="LOCAL−00032" summary="IntelliJ stuff">
+      <created>1602065672124</created>
+      <option name="number" value="LOCAL−00032" />
+      <option name="presentableId" value="LOCAL−00032" />
+      <updated>1602065672124</updated>
+    </task>
+    <task id="LOCAL−00033" summary="Fixing recorder bug">
+      <created>1602140894695</created>
+      <option name="number" value="LOCAL−00033" />
+      <option name="presentableId" value="LOCAL−00033" />
+      <updated>1602140894695</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
-    <option name="COLUMN_ORDER">
+    <option name="COLUMN_ID_ORDER">
       <list>
-        <option value="0" />
-        <option value="2" />
-        <option value="3" />
-        <option value="1" />
+        <option value="Default.Root" />
+        <option value="Default.Author" />
+        <option value="Default.Date" />
+        <option value="Default.Subject" />
       </list>
     </option>
   </component>
@@ -458,8 +484,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Minor features" />
-    <MESSAGE value="Random offset before starting a recording" />
     <MESSAGE value="Delayed recording" />
     <MESSAGE value="Added name and definition to record" />
     <MESSAGE value="Added recording and player lists" />
@@ -483,77 +507,9 @@
     <MESSAGE value="Added copy prefix function" />
     <MESSAGE value="Readding support for multiple headers with the same name" />
     <MESSAGE value="Fixed bug for records with period = 0" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed bug for records with period = 0" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="576" y="88" key="CommitChangelistDialog2" timestamp="1602064992264">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="576" y="88" key="CommitChangelistDialog2/0.0.1920.1040/-1920.0.1536.824@0.0.1920.1040" timestamp="1602064992264" />
-    <state width="408" height="466" key="DebuggerActiveHint" timestamp="1602058276169">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="408" height="466" key="DebuggerActiveHint/0.0.1920.1040/-1920.0.1536.824@0.0.1920.1040" timestamp="1602058276169" />
-    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog" timestamp="1602065567746">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog/0.0.1920.1040/-1920.0.1536.824@0.0.1920.1040" timestamp="1602065567746" />
-    <state width="1455" height="380" key="GridCell.Tab.0.bottom" timestamp="1602065133890">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1344" height="365" key="GridCell.Tab.0.bottom/-1920.0.1920.1040/-3840.0.1536.824/0.0.1920.1040@0.0.1920.1040" timestamp="1601654216422" />
-    <state width="1455" height="380" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.0.1536.824@0.0.1920.1040" timestamp="1602065133890" />
-    <state width="1455" height="380" key="GridCell.Tab.0.center" timestamp="1602065133890">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1344" height="365" key="GridCell.Tab.0.center/-1920.0.1920.1040/-3840.0.1536.824/0.0.1920.1040@0.0.1920.1040" timestamp="1601654216422" />
-    <state width="1455" height="380" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.0.1536.824@0.0.1920.1040" timestamp="1602065133890" />
-    <state width="1455" height="380" key="GridCell.Tab.0.left" timestamp="1602065133890">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1344" height="365" key="GridCell.Tab.0.left/-1920.0.1920.1040/-3840.0.1536.824/0.0.1920.1040@0.0.1920.1040" timestamp="1601654216422" />
-    <state width="1455" height="380" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.0.1536.824@0.0.1920.1040" timestamp="1602065133890" />
-    <state width="1455" height="380" key="GridCell.Tab.0.right" timestamp="1602065133890">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1344" height="365" key="GridCell.Tab.0.right/-1920.0.1920.1040/-3840.0.1536.824/0.0.1920.1040@0.0.1920.1040" timestamp="1601654216422" />
-    <state width="1455" height="380" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.0.1536.824@0.0.1920.1040" timestamp="1602065133890" />
-    <state width="1343" height="288" key="GridCell.Tab.1.bottom" timestamp="1602059079359">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1344" height="365" key="GridCell.Tab.1.bottom/-1920.0.1920.1040/-3840.0.1536.824/0.0.1920.1040@0.0.1920.1040" timestamp="1601654216290" />
-    <state width="1343" height="288" key="GridCell.Tab.1.bottom/0.0.1920.1040/-1920.0.1536.824@0.0.1920.1040" timestamp="1602059079359" />
-    <state width="1343" height="288" key="GridCell.Tab.1.center" timestamp="1602059079358">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1344" height="365" key="GridCell.Tab.1.center/-1920.0.1920.1040/-3840.0.1536.824/0.0.1920.1040@0.0.1920.1040" timestamp="1601654216290" />
-    <state width="1343" height="288" key="GridCell.Tab.1.center/0.0.1920.1040/-1920.0.1536.824@0.0.1920.1040" timestamp="1602059079358" />
-    <state width="1343" height="288" key="GridCell.Tab.1.left" timestamp="1602059079358">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1344" height="365" key="GridCell.Tab.1.left/-1920.0.1920.1040/-3840.0.1536.824/0.0.1920.1040@0.0.1920.1040" timestamp="1601654216290" />
-    <state width="1343" height="288" key="GridCell.Tab.1.left/0.0.1920.1040/-1920.0.1536.824@0.0.1920.1040" timestamp="1602059079358" />
-    <state width="1343" height="288" key="GridCell.Tab.1.right" timestamp="1602059079358">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1344" height="365" key="GridCell.Tab.1.right/-1920.0.1920.1040/-3840.0.1536.824/0.0.1920.1040@0.0.1920.1040" timestamp="1601654216290" />
-    <state width="1343" height="288" key="GridCell.Tab.1.right/0.0.1920.1040/-1920.0.1536.824@0.0.1920.1040" timestamp="1602059079358" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1602065220838">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1920.0.1536.824@0.0.1920.1040" timestamp="1602065220838" />
-    <state x="564" y="349" key="git4idea.merge.GitPullDialog" timestamp="1596106490562">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="564" y="349" key="git4idea.merge.GitPullDialog/-1920.0.1920.1040/-3840.0.1536.824/0.0.1920.1040@0.0.1920.1040" timestamp="1596106490562" />
-    <state x="774" y="414" key="git4idea.ui.GitResetDialog" timestamp="1602065558024">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="774" y="414" key="git4idea.ui.GitResetDialog/0.0.1920.1040/-1920.0.1536.824@0.0.1920.1040" timestamp="1602065558024" />
-    <state x="406" y="402" key="new project wizard" timestamp="1596106382903">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="406" y="402" key="new project wizard/-1920.0.1920.1040/-3840.0.1536.824/0.0.1920.1040@0.0.1920.1040" timestamp="1596106382903" />
+    <MESSAGE value="IntelliJ stuff" />
+    <MESSAGE value="Fixing recorder bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixing recorder bug" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -565,6 +521,13 @@
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="java.lang.Integer" memberName="value" />
+        <PinnedItemInfo parentTag="java.lang.ClassCastException" memberName="backtrace" />
+        <PinnedItemInfo parentTag="com.digia.apirecorder.recorder.dto.StartRecordingSetRequestDTO" memberName="urlsToRecord" />
+      </pinned-members>
+    </pin-to-top-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/apirecorder$TestTest.ic" NAME="TestTest Coverage Results" MODIFIED="1572275793145" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />

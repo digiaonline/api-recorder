@@ -9,5 +9,6 @@ data class StartSingleRecordRequestDTO(
     val method : String = "GET",
     val headers : Map<String, List<String>>?,
     val body : String?,
-    val feedItemPath : String?
+    val feedItemPath : String?,
+    val feedItemUrlTemplate : String?
 )

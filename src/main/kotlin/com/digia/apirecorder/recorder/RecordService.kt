@@ -45,7 +45,7 @@ class RecordService @Autowired constructor(val recordRepository: RecordRepositor
             startSingleRecordRequest.headers,
             startSingleRecordRequest.body,
             startSingleRecordRequest.feedItemPath,
-            null
+            startSingleRecordRequest.feedItemUrlTemplate
         )
         recordRepository.save(record)
         requestRepository.save(request)
@@ -73,7 +73,7 @@ class RecordService @Autowired constructor(val recordRepository: RecordRepositor
             if(startRecordingSetRequest.globalParameters != null) urls = injectParameters(urls, startRecordingSetRequest.globalParameters)
             //Creating jobs based on the urls
             for(url in urls){
-                //Even with the body is null, bodies will contain one null element
+                //Even if the body is null, bodies will contain one null element
                 var bodies = listOf<String?>(urlToRecord.body)
                 if(urlToRecord.body != null){
                     if(urlToRecord.parameters != null) bodies = injectParameters( bodies as List<String>, urlToRecord.parameters)
@@ -88,8 +88,8 @@ class RecordService @Autowired constructor(val recordRepository: RecordRepositor
                         urlToRecord.method,
                         urlToRecord.headers,
                         body,
-                        null,
-                        null
+                        urlToRecord.feedItemPath,
+                        urlToRecord.feedItemUrlTemplate
                     )
                     requestRepository.save(request)
                     val job = startRecordingJob(url, request, startRecordingSetRequest.duration, if(startRecordingSetRequest.start != null) Instant.parse(startRecordingSetRequest.start) else null)
@@ -136,7 +136,7 @@ class RecordService @Autowired constructor(val recordRepository: RecordRepositor
             delay(Duration.between(Instant.now(), recordingBeginningTime).toMillis())
             val randomOffset = if (request.period != 0) request.period else 30
             delay(Random.nextInt(randomOffset)* 1000L) //random offset so that all the recordings won't start at the same time
-            var stopRecording = false
+            var stopRecording = false //if the period is 0, this will be set to true after the first loop
             while(!stopRecording && recordingBeginningTime.plusMillis(recordingDuration * 1000L).isAfter(Instant.now())){
                 val frameBeginningTime = Instant.now()
                 try {
@@ -150,11 +150,11 @@ class RecordService @Autowired constructor(val recordRepository: RecordRepositor
                         Duration.between(requestTime, responseTime).toMillis()
                     )
                     if(request.feedItemPath != null && response.type == ResponseType.NEW){
-                        createFeedItems(request, response, knownItems)
+                        createFeedItems(request, response, knownItems, recordingDuration)
                     }
                 }
                 catch(e : Exception){
-                    log.warn("$url recording failed: ${e.message}")
+                    log.warn("$url recording failed: ${e.message}", e)
                 }
                 val duration = Duration.between(frameBeginningTime, Instant.now())
                 delay(request.period  * 1000 - duration.toMillis())
@@ -164,10 +164,19 @@ class RecordService @Autowired constructor(val recordRepository: RecordRepositor
         }
     }
 
-    fun createFeedItems(request : Request, response : Response, knownItems : MutableSet<String>){
+    fun createFeedItems(request : Request, response : Response, knownItems : MutableSet<String>, recordingDuration : Long){
         //New data in the feed, let's check the new items only
-        val itemUrls = JsonPath.read<List<String>>(response.responseBody.body, request.feedItemPath)
-        itemUrls.forEach { item -> run{
+        //We can't make any assumption on what JsonPath.read will return (depends on the content of the json)
+        //But we have to convert it to string
+        val rawItems = JsonPath.read<List<Any>>(response.responseBody.body, request.feedItemPath)
+        val items : List<String> =
+        if(request.feedItemUrlTemplate != null){
+            rawItems.map {request.feedItemUrlTemplate.replace("ITEM_PLACEHOLDER", it.toString())}
+        }
+        else{
+            rawItems.map { it.toString() }
+        }
+        items.forEach { item -> run{
             if(!knownItems.contains(item)){
                 val subRequest = Request(
                     record = request.record,
@@ -178,7 +187,7 @@ class RecordService @Autowired constructor(val recordRepository: RecordRepositor
                     headers = request.headers
                 )
                 requestRepository.save(subRequest)
-                startRecordingJob(item, subRequest, 0, null)
+                startRecordingJob(item, subRequest, recordingDuration, null)
                 knownItems.add(item)
             }
         }}

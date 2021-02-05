@@ -11,4 +11,6 @@
     <include file="migrations/004-add-request-header-and-body.sql" relativeToChangelogFile="true" />
     <include file="migrations/005-create-response-body.sql" relativeToChangelogFile="true" />
     <include file="migrations/006-add-feed-support.sql" relativeToChangelogFile="true" />
+    <include file="migrations/007-add-feed-item-url-template.sql" relativeToChangelogFile="true" />
+    <include file="migrations/008-enlarge-header-columns.sql" relativeToChangelogFile="true" />
 </databaseChangeLog>

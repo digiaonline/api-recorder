@@ -19,6 +19,8 @@ data class Request(
     val body : String? = null,
     @Column(name = "feed_item_path")
     val feedItemPath : String? = null,
+    @Column(name = "feed_item_url_template")
+    val feedItemUrlTemplate : String? = null,
     @ManyToOne
     @JoinColumn(name="parent_request_id", nullable = true)
     val parentRequest : Request? = null

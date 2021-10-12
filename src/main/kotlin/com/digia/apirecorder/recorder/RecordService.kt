@@ -19,7 +19,12 @@ import kotlin.random.Random
 
 
 @Service
-class RecordService @Autowired constructor(val recordRepository: RecordRepository, val requestRepository: RequestRepository, val dataWriter: DataWriterService, val dataReader: DataReaderService) {
+class RecordService @Autowired constructor(val recordRepository: RecordRepository,
+                                           val requestRepository: RequestRepository,
+                                           val responseRepository: ResponseRepository,
+                                           val responseBodyRepository: ResponseBodyRepository,
+                                           val dataWriter: DataWriterService,
+                                           val dataReader: DataReaderService) {
 
     private val log = KotlinLogging.logger {}
     private val activeRecordings : MutableMap<String, MutableSet<Job>> = mutableMapOf()
@@ -203,7 +208,14 @@ class RecordService @Autowired constructor(val recordRepository: RecordRepositor
     }
 
     fun delete(uuid : String){
-        throw Exception("Not implemented")
+        val record = recordRepository.findByUuid(uuid) ?: throw Exception("Record not found")
+        val requests = requestRepository.findByRecordId(record.id!!)
+        requests?.forEach {
+            val responses = responseRepository.findByRequestId(it.id!!)
+            responseRepository.deleteAll(responses)
+            requestRepository.delete(it)
+        }
+        recordRepository.delete(record)
     }
 
     fun listRecordings() : List<Record>{

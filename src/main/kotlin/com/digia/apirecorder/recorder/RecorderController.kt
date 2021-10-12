@@ -78,7 +78,7 @@ class RecorderController @Autowired constructor(val recorderService : RecordServ
             ResponseEntity(recorderService.listRecordings(), HttpStatus.OK)
         }
         catch(e : Exception){
-            log.error("Error while starting the recorder", e)
+            log.error("Error while deleting the record", e)
             ResponseEntity("something went wrong: ${e.message}", HttpStatus.INTERNAL_SERVER_ERROR)
         }
     }

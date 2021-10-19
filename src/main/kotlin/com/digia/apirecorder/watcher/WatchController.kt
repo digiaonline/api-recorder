@@ -37,7 +37,7 @@ class WatchController @Autowired constructor(
                 val response = responseRepository.findTopByRequestAndTimeOffset(request, activePlay.currentOffset)
                     ?: return ResponseEntity("No recorded value at offset ${activePlay.currentOffset} for the request", HttpStatus.NOT_FOUND)
                 val linkedMultiValueMap = LinkedMultiValueMap<String, String>()
-                response.headers?.forEach {(key, value) -> linkedMultiValueMap[key] = value }
+                response.headers.forEach {(key, value) -> linkedMultiValueMap[key] = value }
                 ResponseEntity(
                     response.customBody?: response.responseBody.body,
                     linkedMultiValueMap,

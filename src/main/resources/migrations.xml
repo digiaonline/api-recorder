@@ -13,4 +13,5 @@
     <include file="migrations/006-add-feed-support.sql" relativeToChangelogFile="true" />
     <include file="migrations/007-add-feed-item-url-template.sql" relativeToChangelogFile="true" />
     <include file="migrations/008-enlarge-header-columns.sql" relativeToChangelogFile="true" />
+    <include file="migrations/009-record-deletion-field.sql" relativeToChangelogFile="true" />
 </databaseChangeLog>

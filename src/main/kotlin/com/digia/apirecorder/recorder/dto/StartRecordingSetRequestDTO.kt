@@ -1,6 +1,12 @@
 package com.digia.apirecorder.recorder.dto
 
-data class StartRecordingSetRequestDTO(val urlsToRecord : Array<UrlToRecord>, val duration : Long, val start : String?, val name : String?, val globalParameters : Array<ParametersDTO>?) {
+data class StartRecordingSetRequestDTO(
+    val urlsToRecord : Array<UrlToRecord>,
+    val duration : Long,
+    val start : String?,
+    val name : String?,
+    val globalParameters : Array<ParametersDTO>?,
+    val lifespan : Long?) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
@@ -20,7 +26,14 @@ data class StartRecordingSetRequestDTO(val urlsToRecord : Array<UrlToRecord>, va
     }
 }
 
-data class UrlToRecord(val url : String, val parameters : Array<ParametersDTO>?, val period : Int, val body : String?, val headers : Map<String, List<String>>?, val method : String = "GET", val feedItemPath : String?, val feedItemUrlTemplate: String?) {
+data class UrlToRecord(
+    val url : String,
+    val parameters : Array<ParametersDTO>?,
+    val period : Int, val body : String?,
+    val headers : Map<String, List<String>>?,
+    val method : String = "GET",
+    val feedItemPath : String?,
+    val feedItemUrlTemplate: String?) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
@@ -46,7 +59,9 @@ data class UrlToRecord(val url : String, val parameters : Array<ParametersDTO>?,
     }
 }
 
-data class ParametersDTO(val name: String, val values : Array<String>) {
+data class ParametersDTO(
+    val name: String,
+    val values : Array<String>) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

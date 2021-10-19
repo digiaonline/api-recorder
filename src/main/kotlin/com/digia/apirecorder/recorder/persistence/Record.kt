@@ -12,4 +12,5 @@ data class Record(
     val name : String?,
     val definition : String,
     val start : LocalDateTime,
-    var end : LocalDateTime?)
+    var end : LocalDateTime?,
+    val lifespan : Long?)

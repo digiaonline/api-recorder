@@ -11,9 +11,7 @@ import kotlinx.coroutines.*
 import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-import java.time.Duration
-import java.time.Instant
-import java.time.LocalDateTime
+import java.time.*
 import java.util.*
 import kotlin.random.Random
 
@@ -32,14 +30,15 @@ class RecordService @Autowired constructor(val recordRepository: RecordRepositor
 
     fun startRecording(startSingleRecordRequest : StartSingleRecordRequestDTO) : String{
         val uuid = UUID.randomUUID().toString()
-
+        val startingDateTime = if(startSingleRecordRequest.start == null) LocalDateTime.now() else LocalDateTime.parse(startSingleRecordRequest.start)
         val record = Record(
             null,
             uuid,
             startSingleRecordRequest.name,
             objectMapper.writeValueAsString(startSingleRecordRequest),
-            LocalDateTime.now(),
-            LocalDateTime.now().plusSeconds(startSingleRecordRequest.duration)
+            startingDateTime,
+            startingDateTime.plusSeconds(startSingleRecordRequest.duration),
+            startSingleRecordRequest.lifespan
         )
         val request = Request(
             null,
@@ -54,32 +53,38 @@ class RecordService @Autowired constructor(val recordRepository: RecordRepositor
         )
         recordRepository.save(record)
         requestRepository.save(request)
-        val job = startRecordingJob(startSingleRecordRequest.url, request, startSingleRecordRequest.duration, if(startSingleRecordRequest.start != null) Instant.parse(startSingleRecordRequest.start) else null)
+        val job = startRecordingJob(startSingleRecordRequest.url, request, startSingleRecordRequest.duration, startingDateTime.toInstant(
+            ZoneOffset.UTC))
         activeRecordings[uuid] = mutableSetOf(job)
+        if(record.lifespan!= null) {
+            startDeletionJob(record)
+        }
         return uuid
     }
 
     fun startRecording(startRecordingSetRequest : StartRecordingSetRequestDTO) : String{
         val uuid = UUID.randomUUID().toString()
+        val startingDateTime = if(startRecordingSetRequest.start == null) LocalDateTime.now() else LocalDateTime.parse(startRecordingSetRequest.start)
         val record = Record(
             null,
             uuid,
             startRecordingSetRequest.name,
             objectMapper.writeValueAsString(startRecordingSetRequest),
-            LocalDateTime.now(),
-            LocalDateTime.now().plusSeconds(startRecordingSetRequest.duration)
+            startingDateTime,
+            startingDateTime.plusSeconds(startRecordingSetRequest.duration),
+            startRecordingSetRequest.lifespan
         )
         recordRepository.save(record)
         activeRecordings[uuid] = mutableSetOf()
         for(urlToRecord in startRecordingSetRequest.urlsToRecord){
             //Creating urls based on parameters
-            var urls = listOf<String>(urlToRecord.url)
+            var urls = listOf(urlToRecord.url)
             if(urlToRecord.parameters != null) urls = injectParameters(urls, urlToRecord.parameters)
             if(startRecordingSetRequest.globalParameters != null) urls = injectParameters(urls, startRecordingSetRequest.globalParameters)
             //Creating jobs based on the urls
             for(url in urls){
                 //Even if the body is null, bodies will contain one null element
-                var bodies = listOf<String?>(urlToRecord.body)
+                var bodies = listOf(urlToRecord.body)
                 if(urlToRecord.body != null){
                     if(urlToRecord.parameters != null) bodies = injectParameters( bodies as List<String>, urlToRecord.parameters)
                     if(startRecordingSetRequest.globalParameters != null) bodies = injectParameters(bodies as List<String>, startRecordingSetRequest.globalParameters)
@@ -97,10 +102,13 @@ class RecordService @Autowired constructor(val recordRepository: RecordRepositor
                         urlToRecord.feedItemUrlTemplate
                     )
                     requestRepository.save(request)
-                    val job = startRecordingJob(url, request, startRecordingSetRequest.duration, if(startRecordingSetRequest.start != null) Instant.parse(startRecordingSetRequest.start) else null)
+                    val job = startRecordingJob(url, request, startRecordingSetRequest.duration, startingDateTime.toInstant(ZoneOffset.UTC))
                     activeRecordings[uuid]!!.add(job)
                 }
             }
+        }
+        if(record.lifespan!= null){
+            startDeletionJob(record)
         }
         return uuid
     }
@@ -134,10 +142,19 @@ class RecordService @Autowired constructor(val recordRepository: RecordRepositor
         return sourceUrlTargetStringsList
     }
 
-    private fun startRecordingJob(url : String, request : Request, recordingDuration : Long, start : Instant?, knownItems : MutableSet<String> = mutableSetOf()) : Job{
+    private fun startDeletionJob(record : Record) : Job{
+        return GlobalScope.launch(Dispatchers.IO){
+            if(record.lifespan != null){
+                delay(Duration.between(Instant.now(), record.start.plusSeconds(record.lifespan)).toMillis())
+                delete(record.uuid)
+            }
+        }
+    }
+
+
+    private fun startRecordingJob(url : String, request : Request, recordingDuration : Long, recordingBeginningTime : Instant, knownItems : MutableSet<String> = mutableSetOf()) : Job{
         return GlobalScope.launch(Dispatchers.IO){
             log.info("Starting recording $url for record ${request.id}")
-            val recordingBeginningTime = start?:Instant.now()
             delay(Duration.between(Instant.now(), recordingBeginningTime).toMillis())
             val randomOffset = if (request.period != 0) request.period else 30
             delay(Random.nextInt(randomOffset)* 1000L) //random offset so that all the recordings won't start at the same time
@@ -192,7 +209,7 @@ class RecordService @Autowired constructor(val recordRepository: RecordRepositor
                     headers = request.headers
                 )
                 requestRepository.save(subRequest)
-                startRecordingJob(item, subRequest, recordingDuration, null)
+                startRecordingJob(item, subRequest, recordingDuration, request.record.start.toInstant(ZoneOffset.UTC))
                 knownItems.add(item)
             }
         }}
@@ -220,6 +237,27 @@ class RecordService @Autowired constructor(val recordRepository: RecordRepositor
 
     fun listRecordings() : List<Record>{
         return recordRepository.findAll()
+    }
+
+    fun restoreRecordingJobs(){
+        recordRepository.findAll().forEach { record ->
+            if(record.end == null || record.end!!.isAfter(LocalDateTime.now())){
+                activeRecordings[record.uuid] = mutableSetOf()
+                requestRepository.findByRecordId(record.id!!)!!.forEach { request ->
+                    val duration = Duration.between(record.start, record.end)
+                    //TODO Forcing https because we don't keep the protocol in the request url.
+                    val job = startRecordingJob("https://" + request.url, request, duration.seconds, record.start.toInstant(
+                        ZoneOffset.UTC))
+                    activeRecordings[record.uuid]!!.add(job)
+                }
+            }
+        }
+    }
+
+    fun restoreDeletingJobs(){
+        recordRepository.findAll().forEach { record ->
+            startDeletionJob(record)
+        }
     }
 
 }

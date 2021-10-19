@@ -10,5 +10,6 @@ data class StartSingleRecordRequestDTO(
     val headers : Map<String, List<String>>?,
     val body : String?,
     val feedItemPath : String?,
-    val feedItemUrlTemplate : String?
+    val feedItemUrlTemplate : String?,
+    val lifespan : Long?
 )

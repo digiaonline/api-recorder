@@ -5,16 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9c7799f2-4a86-45f9-af68-95cb1f50c63d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/migrations/007-add-feed-item-url-template.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/migrations/008-enlarge-header-columns.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/apirecorder.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/apirecorder.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/migrations/009-record-deletion-field.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/digia/apirecorder/RecorderApplication.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/digia/apirecorder/RecorderApplication.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/digia/apirecorder/recorder/RecordService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/digia/apirecorder/recorder/RecordService.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/digia/apirecorder/recorder/dto/StartRecordingSetRequestDTO.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/digia/apirecorder/recorder/dto/StartRecordingSetRequestDTO.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/digia/apirecorder/recorder/dto/StartSingleRecordRequestDTO.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/digia/apirecorder/recorder/dto/StartSingleRecordRequestDTO.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/digia/apirecorder/recorder/persistence/Request.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/digia/apirecorder/recorder/persistence/Request.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/digia/apirecorder/recorder/persistence/Record.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/digia/apirecorder/recorder/persistence/Record.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/digia/apirecorder/watcher/WatchController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/digia/apirecorder/watcher/WatchController.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/migrations.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/migrations.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/com/digia/apirecorder/DbTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/com/digia/apirecorder/DbTest.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,6 +48,28 @@
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="apirecorder" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="apirecorder" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="apirecorder" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="application" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="apirecorder" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="apirecorder" type="f1a62948:ProjectNode" />
+                <item name="Dependencies" type="6de06a37:ExternalSystemViewDefaultContributor$MyDependenciesNode" />
               </path>
             </expand>
             <select />
@@ -102,21 +124,21 @@
     <property name="LombokPluginIS_VAL_Enabled" value="false" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../transitdata/testpostgre" />
-    <property name="project.structure.last.edited" value="Modules" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="project.propCompiler" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\dev\backend\apirecorder\src\main\kotlin\utils" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\dev\backend\apirecorder\src\main\resources" />
       <recent name="C:\dev\backend\apirecorder\src\main\resources\static\js" />
       <recent name="C:\dev\backend\apirecorder\src\main\resources\templates" />
       <recent name="C:\dev\backend\apirecorder\src\main\kotlin\com\digia\apirecorder\recorder\dto" />
       <recent name="C:\dev\backend\apirecorder\src\main\kotlin\com\digia\apirecorder\collection" />
-    </key>
-    <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
-      <recent name="network" />
     </key>
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
       <recent name="com.digia.apirecorder.watcher" />
@@ -125,33 +147,11 @@
       <recent name="com.digia.apirecorder.collection" />
       <recent name="com.digia.apirecorder.recorder" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\dev\backend\apirecorder\src\main\kotlin\utils" />
+    <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="network" />
     </key>
   </component>
   <component name="RunManager" selected="Application.com.digia.apirecorder.RecorderApplicationKt">
-    <configuration name="DbTest.testPersistence" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="--tests &quot;com.digia.apirecorder.DbTest.testPersistence&quot;" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":cleanTest" />
-            <option value=":test" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
     <configuration name="apirecorder [bootJar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -164,6 +164,27 @@
         <option name="taskNames">
           <list>
             <option value="bootJar" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="apirecorder [bootRun]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="bootRun" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -194,7 +215,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="apirecorder [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="apirecorder [jar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -205,7 +226,7 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value="clean" />
+            <option value="jar" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -232,18 +253,18 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Gradle.apirecorder [bootJar]" />
       <item itemvalue="Gradle.apirecorder [build]" />
-      <item itemvalue="Gradle.apirecorder [clean]" />
-      <item itemvalue="Gradle.DbTest.testPersistence" />
+      <item itemvalue="Gradle.apirecorder [jar]" />
+      <item itemvalue="Gradle.apirecorder [bootRun]" />
+      <item itemvalue="Gradle.apirecorder [bootJar]" />
       <item itemvalue="Application.com.digia.apirecorder.RecorderApplicationKt" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.com.digia.apirecorder.RecorderApplicationKt" />
         <item itemvalue="Gradle.apirecorder [bootJar]" />
-        <item itemvalue="Gradle.apirecorder [clean]" />
-        <item itemvalue="Gradle.DbTest.testPersistence" />
+        <item itemvalue="Gradle.apirecorder [bootRun]" />
+        <item itemvalue="Gradle.apirecorder [jar]" />
         <item itemvalue="Gradle.apirecorder [build]" />
       </list>
     </recent_temporary>
@@ -458,7 +479,19 @@
       <option name="presentableId" value="LOCAL−00033" />
       <updated>1602140894695</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL−00034" summary="Added feed item url template">
+      <created>1612537032408</created>
+      <option name="number" value="LOCAL−00034" />
+      <option name="presentableId" value="LOCAL−00034" />
+      <updated>1612537032408</updated>
+    </task>
+    <task id="LOCAL−00035" summary="Unoptimized deletion">
+      <created>1634044460272</created>
+      <option name="number" value="LOCAL−00035" />
+      <option name="presentableId" value="LOCAL−00035" />
+      <updated>1634044460272</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -484,8 +517,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Delayed recording" />
-    <MESSAGE value="Added name and definition to record" />
     <MESSAGE value="Added recording and player lists" />
     <MESSAGE value="Added swagger" />
     <MESSAGE value="Added response type, code and time" />
@@ -509,7 +540,9 @@
     <MESSAGE value="Fixed bug for records with period = 0" />
     <MESSAGE value="IntelliJ stuff" />
     <MESSAGE value="Fixing recorder bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixing recorder bug" />
+    <MESSAGE value="Added feed item url template" />
+    <MESSAGE value="Unoptimized deletion" />
+    <option name="LAST_COMMIT_MESSAGE" value="Unoptimized deletion" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

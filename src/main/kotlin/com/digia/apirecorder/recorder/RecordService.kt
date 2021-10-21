@@ -30,7 +30,7 @@ class RecordService @Autowired constructor(val recordRepository: RecordRepositor
 
     fun startRecording(startSingleRecordRequest : StartSingleRecordRequestDTO) : String{
         val uuid = UUID.randomUUID().toString()
-        val startingDateTime = if(startSingleRecordRequest.start == null) LocalDateTime.now() else LocalDateTime.parse(startSingleRecordRequest.start)
+        val startingDateTime = if(startSingleRecordRequest.start == null) LocalDateTime.now() else LocalDateTime.ofInstant(Instant.parse(startSingleRecordRequest.start),ZoneOffset.UTC)
         val record = Record(
             null,
             uuid,
@@ -64,7 +64,7 @@ class RecordService @Autowired constructor(val recordRepository: RecordRepositor
 
     fun startRecording(startRecordingSetRequest : StartRecordingSetRequestDTO) : String{
         val uuid = UUID.randomUUID().toString()
-        val startingDateTime = if(startRecordingSetRequest.start == null) LocalDateTime.now() else LocalDateTime.parse(startRecordingSetRequest.start)
+        val startingDateTime = if(startRecordingSetRequest.start == null) LocalDateTime.now() else LocalDateTime.ofInstant(Instant.parse(startRecordingSetRequest.start), ZoneOffset.UTC)
         val record = Record(
             null,
             uuid,
